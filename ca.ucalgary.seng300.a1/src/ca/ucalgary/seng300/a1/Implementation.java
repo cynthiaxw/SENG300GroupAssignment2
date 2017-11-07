@@ -24,12 +24,7 @@ import org.lsmr.vending.hardware.PopCanRackListener;
 import org.lsmr.vending.hardware.SelectionButton;
 import org.lsmr.vending.hardware.SelectionButtonListener;
 
-/*
- * Created by
- * 	Dan Dunareanu 30002346
- * 	Mahsa Gaskarimahalleh
- * 	Andrew Garcia-Corley
- */
+
 
 public class Implementation implements CoinSlotListener, SelectionButtonListener, PopCanRackListener, CoinReceptacleListener, CoinRackListener, DeliveryChuteListener {
 
