@@ -3,7 +3,7 @@ package ca.ucalgary.seng300.a1;
 import org.lsmr.vending.*;
 import org.lsmr.vending.hardware.*;
 
-public class CoinSlotListenerDevice implements CoinSlotListener, SelectionButtonListener {
+public class CoinSlotListenerDevice implements CoinSlotListener, PushButtonListener {
 
 	private int value = 0;
 	private VendingMachine vending;
@@ -13,7 +13,7 @@ public class CoinSlotListenerDevice implements CoinSlotListener, SelectionButton
 		value = 0;	
 	}
 	
-	public CoinSlotListenerDevice(SelectionButton button) {
+	public CoinSlotListenerDevice(PushButton button) {
 		button.register(this);
 	}
 	
@@ -91,7 +91,7 @@ public class CoinSlotListenerDevice implements CoinSlotListener, SelectionButton
 	}
 
 	@Override
-	public void pressed(SelectionButton button) {
+	public void pressed(PushButton button) {
 		// TODO Auto-generated method stub
 		int index = findButtonIndex(button);
 		int cost = vending.getPopKindCost(index);
@@ -107,12 +107,12 @@ public class CoinSlotListenerDevice implements CoinSlotListener, SelectionButton
 	}
 	
 	/**
-	 * Finds the index of a SelectionButton in this objects VendingMachine reference's
+	 * Finds the index of a PushButton in this objects VendingMachine reference's
 	 * button array
-	 * @param button the SelectionButton to search for in the VendingMachine button array
-	 * @return the index of the SelectionButton in the button array, -1 if it's not there
+	 * @param button the PushButton to search for in the VendingMachine button array
+	 * @return the index of the PushButton in the button array, -1 if it's not there
 	 */
-	public int findButtonIndex (SelectionButton button) {
+	public int findButtonIndex (PushButton button) {
 		for (int i = 0; i < vending.getNumberOfSelectionButtons(); i++) {
 			if (vending.getSelectionButton(i) == button) {
 				return i;
