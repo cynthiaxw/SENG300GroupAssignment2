@@ -1,3 +1,5 @@
+package groupAssignment2;
+
 import org.lsmr.vending.*;
 import org.lsmr.vending.hardware.*;
 
@@ -13,27 +15,32 @@ public class CoinSlotListenerDevice implements CoinSlotListener {
 		
 	}
 	
+
+	public int enabledCount = 0;
+	public int disabledCount = 0;
+	public int validCoinInsertedCount = 0;
+	public int coinRejectedCount = 0;
+
 	@Override
 	public void enabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
-		// Nothing for now
+	    enabledCount++;
 	}
 
 	@Override
 	public void disabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
-		// TODO Nothing for now
-		
+	    disabledCount++;
 	}
 
 	@Override
 	public void validCoinInserted(CoinSlot slot, Coin coin) {
-		//logic.enteredValidCoin(slot, coin);
-		
+	    validCoinInsertedCount++;
 	}
 
 	@Override
 	public void coinRejected(CoinSlot slot, Coin coin) {
-		//logic.enteredInvalidCoin(slot, coin);
-		
+	    coinRejectedCount++;
 	}
+
+    
 
 }
