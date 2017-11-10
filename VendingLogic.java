@@ -25,7 +25,14 @@ public class VendingLogic {
 		vm.getCoinSlot().register(new CoinSlotListenerDevice(this));
 		vm.getCoinRack(0).register(new CoinRackListenerDevice(this)); //TODO Note that we can register for specific coin types, use the other register method
 		vm.getCoinReceptacle().register(new CoinReceptacleListenerDevice(this));
-		vm.getCoinReceptacle().register(new CoinReturnListenerDevice(this));
+		//vm.getCoinReceptacle().register(new CoinReceptacleListenerDevice(this)); this was supposed to be the coinReturn
+		
+		try {
+			vm.getCoinReturn().register(new CoinReturnListenerDevice(this));}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
 		
 		for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {
 			vm.getSelectionButton(i).register(new PushButtonListenerDevice(this));
