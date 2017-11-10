@@ -6,13 +6,19 @@ import java.util.TimerTask;
 public class VendingLogic {
 	private VendingMachine vm;			// The vending machine that this logic program is installed on
 	private int credit;					// credit is saved in terms of cents 
-		
+	private EventLog EL;
+	
 	public VendingLogic(VendingMachine vend)
 	{
 		this.vm = vend;
 		credit = 0;
-		
+		EL = new EventLog();
 		registerListeners();
+	}
+	
+	//getter for EL
+	public EventLog getEventLog(){
+		return EL;
 	}
 	
 	public int getCurrencyValue(){
