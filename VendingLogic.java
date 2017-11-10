@@ -1,5 +1,7 @@
 import org.lsmr.vending.*;
 import org.lsmr.vending.hardware.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class VendingLogic {
 	private VendingMachine vm;			// The vending machine that this logic program is installed on
@@ -35,6 +37,18 @@ public class VendingLogic {
 		}
 		
 		vm.getConfigurationPanel().getEnterButton().register(new PushButtonListenerDevice(this));
+	}
+	
+	/**
+	 * Method for displaying a message for 5 seconds and erase it for 10s, if credit in VM is zero.
+	 */
+	
+	public void welcomeMessageTimer(){
+		TimerTask task = new MyTimer(vm);
+		Timer timer = new Timer();
+		while (credit == 0){
+			timer.schedule(task, 10000, 5000);
+		}
 	}
 
 	/**
