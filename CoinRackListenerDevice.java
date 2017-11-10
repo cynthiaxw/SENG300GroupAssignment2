@@ -1,10 +1,19 @@
+package groupAssignment2;
+
 import org.lsmr.vending.*;
 import org.lsmr.vending.hardware.*;
+
 
 
 public class CoinRackListenerDevice implements CoinRackListener{
 
 	private VendingLogic logic;
+	public int enabledCount = 0;
+	public int disabledCount = 0;
+	public int coinValue = 0;
+	public int coinCount = 0;
+	public boolean coinsFull = false;
+	public boolean coinsEmpty = false;
 	
 	public CoinRackListenerDevice (VendingLogic logic)
 	{
@@ -13,49 +22,53 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	
 	@Override
 	public void enabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
-		// TODO Auto-generated method stub
-		
+	    enabledCount++;
 	}
 
 	@Override
 	public void disabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
-		// TODO Auto-generated method stub
-		
+	    disabledCount++;
 	}
 
 	@Override
 	public void coinsFull(CoinRack rack) {
-		// TODO Auto-generated method stub
+		coinsFull = true;
 		
 	}
 
 	@Override
 	public void coinsEmpty(CoinRack rack) {
-		// TODO Auto-generated method stub
+		coinsEmpty = false;
 		
 	}
 
 	@Override
 	public void coinAdded(CoinRack rack, Coin coin) {
-		// TODO Auto-generated method stub
+		coinValue+=coin.getValue();
+		coinCount++;
 		
 	}
 
 	@Override
 	public void coinRemoved(CoinRack rack, Coin coin) {
-		// TODO Auto-generated method stub
+		coinValue-=coin.getValue();
+		coinCount--;
 		
 	}
 
 	@Override
 	public void coinsLoaded(CoinRack rack, Coin... coins) {
-		// TODO Auto-generated method stub
+		for(Coin coin : coins) {
+			 coinAdded(rack, coin);
+		}
 		
 	}
 
 	@Override
 	public void coinsUnloaded(CoinRack rack, Coin... coins) {
-		// TODO Auto-generated method stub
+		for(Coin coin : coins) {
+			coinRemoved(rack, coin);
+		}
 		
 	}
 
