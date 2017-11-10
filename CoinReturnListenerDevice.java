@@ -58,6 +58,7 @@ public class CoinReturnListenerDevice implements CoinReturnListener {
 		if(coinReturn.getCapacity()<=coinReturn.size()) {
 			returnsfull = true;
 		}
+		else returnsfull = false;
 	}
 
 }
