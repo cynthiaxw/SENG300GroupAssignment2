@@ -1,5 +1,7 @@
 import org.lsmr.vending.*;
 import org.lsmr.vending.hardware.*;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class VendingLogic {
 	private VendingMachine vm;			// The vending machine that this logic program is installed on
@@ -23,7 +25,14 @@ public class VendingLogic {
 		vm.getCoinSlot().register(new CoinSlotListenerDevice(this));
 		vm.getCoinRack(0).register(new CoinRackListenerDevice(this)); //TODO Note that we can register for specific coin types, use the other register method
 		vm.getCoinReceptacle().register(new CoinReceptacleListenerDevice(this));
-		vm.getCoinReceptacle().register(new CoinReturnListenerDevice(this));
+		//vm.getCoinReceptacle().register(new CoinReceptacleListenerDevice(this)); this was supposed to be the coinReturn
+		
+		try {
+			vm.getCoinReturn().register(new CoinReturnListenerDevice(this));}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
 		
 		for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {
 			vm.getSelectionButton(i).register(new PushButtonListenerDevice(this));
@@ -35,6 +44,18 @@ public class VendingLogic {
 		}
 		
 		vm.getConfigurationPanel().getEnterButton().register(new PushButtonListenerDevice(this));
+	}
+	
+	/**
+	 * Method for displaying a message for 5 seconds and erase it for 10s, if credit in VM is zero.
+	 */
+	
+	public void welcomeMessageTimer(){
+		TimerTask task = new MyTimer(vm);
+		Timer timer = new Timer();
+		while (credit == 0){
+			timer.schedule(task, 10000, 5000);
+		}
 	}
 
 	/**
@@ -104,7 +125,7 @@ public class VendingLogic {
 		// search through the selection buttons to see if the parameter button is a selection button
 		for (int index = 0; (found == false) && (index < vm.getNumberOfSelectionButtons()); index++) {
 			if (vm.getSelectionButton(index) == button) {
-				if (vm.getPopKindCost(index) > credit) {
+				if (vm.getPopKindCost(index) <= credit) {
 					try {
 						vm.getPopCanRack(index).dispensePopCan();
 						this.dispensingMessage();
