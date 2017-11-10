@@ -12,8 +12,8 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	public int disabledCount = 0;
 	public int coinValue = 0;
 	public int coinCount = 0;
-	public boolean coinsFull = false;
-	public boolean coinsEmpty = false;
+	public boolean racksFull = false;
+	public boolean racksEmpty = false;
 	
 	public CoinRackListenerDevice (VendingLogic logic)
 	{
@@ -30,18 +30,44 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	    disabledCount++;
 	}
 
+	/**
+     * Announces that the indicated coin rack is full of coins.
+     * 
+     * @param rack
+     *            The rack where the event occurred.
+     */
 	@Override
 	public void coinsFull(CoinRack rack) {
-		coinsFull = true;
-		
+		if(rack.getCapacity()<=rack.size()) {
+			racksFull = true;
+		}
+		else racksFull = false;
 	}
 
+	/**
+     * Announces that the indicated coin rack is empty of coins.
+     * 
+     * @param rack
+     *            The rack where the event occurred.
+     */
 	@Override
 	public void coinsEmpty(CoinRack rack) {
-		coinsEmpty = false;
+		if(rack.size() == 0) {
+			racksEmpty = true;
+		}
+		else racksEmpty = false;
 		
 	}
 
+	 /**
+     * Announces that the indicated coin has been added to the indicated coin
+     * rack.
+     * 
+     * @param rack
+     *            The rack where the event occurred.
+     * @param coin
+     *            The coin that was added.
+     */
 	@Override
 	public void coinAdded(CoinRack rack, Coin coin) {
 		coinValue+=coin.getValue();
@@ -49,6 +75,15 @@ public class CoinRackListenerDevice implements CoinRackListener{
 		
 	}
 
+	/**
+     * Announces that the indicated coin has been added to the indicated coin
+     * rack.
+     * 
+     * @param rack
+     *            The rack where the event occurred.
+     * @param coin
+     *            The coin that was removed.
+     */
 	@Override
 	public void coinRemoved(CoinRack rack, Coin coin) {
 		coinValue-=coin.getValue();
@@ -56,6 +91,16 @@ public class CoinRackListenerDevice implements CoinRackListener{
 		
 	}
 
+	/**
+     * Announces that the indicated sequence of coins has been added to the
+     * indicated coin rack. Used to simulate direct, physical loading of the
+     * rack.
+     * 
+     * @param rack
+     *            The rack where the event occurred.
+     * @param coins
+     *            The coins that were loaded.
+     */
 	@Override
 	public void coinsLoaded(CoinRack rack, Coin... coins) {
 		for(Coin coin : coins) {
@@ -64,6 +109,16 @@ public class CoinRackListenerDevice implements CoinRackListener{
 		
 	}
 
+	/**
+     * Announces that the indicated sequence of coins has been removed to the
+     * indicated coin rack. Used to simulate direct, physical unloading of the
+     * rack.
+     * 
+     * @param rack
+     *            The rack where the event occurred.
+     * @param coins
+     *            The coins that were unloaded.
+     */
 	@Override
 	public void coinsUnloaded(CoinRack rack, Coin... coins) {
 		for(Coin coin : coins) {
