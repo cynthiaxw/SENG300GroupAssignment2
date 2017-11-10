@@ -17,6 +17,12 @@ public class EventLog {
 			e.printStackTrace();
 		}		
 	}
+	public void writeToLog(String s){
+		timeStamp();
+		writer.println(s + "\n");		
+	}
+	/*
+	JUST DO GENERIC WRITE METHOD FOR NOW
 	public void buttonPushed(String pname, int btnNum) {
 		//print the selection made
 		timeStamp();
@@ -37,6 +43,8 @@ public class EventLog {
 		timeStamp();
 		writer.println(pName + " has been dispensed \t Credit is now: " + crd + "\n");
 	}
+	*/
+	
 	public void timeStamp() {
 		DateFormat df = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
 		Date date = new Date();
