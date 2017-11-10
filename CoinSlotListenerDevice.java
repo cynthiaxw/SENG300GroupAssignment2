@@ -20,6 +20,9 @@ public class CoinSlotListenerDevice implements CoinSlotListener {
 	public int disabledCount = 0;
 	public int validCoinInsertedCount = 0;
 	public int coinRejectedCount = 0;
+	public int insertedCoinValue = 0;
+	public int rejectedCoinValue = 0;
+	
 
 	@Override
 	public void enabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
@@ -34,11 +37,13 @@ public class CoinSlotListenerDevice implements CoinSlotListener {
 	@Override
 	public void validCoinInserted(CoinSlot slot, Coin coin) {
 	    validCoinInsertedCount++;
+	    insertedCoinValue += coin.getValue();
 	}
 
 	@Override
 	public void coinRejected(CoinSlot slot, Coin coin) {
 	    coinRejectedCount++;
+	    rejectedCoinValue += coin.getValue();
 	}
 
     
