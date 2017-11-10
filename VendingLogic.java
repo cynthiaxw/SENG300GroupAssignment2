@@ -125,7 +125,7 @@ public class VendingLogic {
 		// search through the selection buttons to see if the parameter button is a selection button
 		for (int index = 0; (found == false) && (index < vm.getNumberOfSelectionButtons()); index++) {
 			if (vm.getSelectionButton(index) == button) {
-				if (vm.getPopKindCost(index) > credit) {
+				if (vm.getPopKindCost(index) <= credit) {
 					try {
 						vm.getPopCanRack(index).dispensePopCan();
 						this.dispensingMessage();
