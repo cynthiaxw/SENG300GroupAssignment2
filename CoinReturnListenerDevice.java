@@ -23,11 +23,13 @@ public class CoinReturnListenerDevice implements CoinReturnListener {
 	@Override
 	public void enabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
 	    enabledCount++;
+	    logic.enableHardware(hardware);
 	}
 
 	@Override
 	public void disabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
 	    disabledCount++;
+	    logic.disableHardware(hardware);
 	}
 	
 	/**
@@ -43,6 +45,7 @@ public class CoinReturnListenerDevice implements CoinReturnListener {
 			deliveredCoinCount++;
 			deliveredCoinValue+=coin.getValue();
 		}
+		logic.getEventLog().writeToLog("CoinReturn delivered " + deliveredCoinValue + "cents");
 		
 	}
 	
@@ -57,6 +60,7 @@ public class CoinReturnListenerDevice implements CoinReturnListener {
 	public void returnIsFull(CoinReturn coinReturn) {
 		if(coinReturn.getCapacity()<=coinReturn.size()) {
 			returnsfull = true;
+			logic.getEventLog().writeToLog("CoinReturn is full.");
 		}
 		else returnsfull = false;
 	}
