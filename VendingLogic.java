@@ -148,7 +148,7 @@ public class VendingLogic {
 					try {
 						vm.getPopCanRack(index).dispensePopCan();
 						this.dispensingMessage();
-						credit = 0;
+						credit = 0;   // TODO properly deduct price. return change if necessary.
 						this.displayCredit();
 					} catch (DisabledException e) {
 						// TODO Auto-generated catch block
