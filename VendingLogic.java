@@ -34,7 +34,7 @@ public class VendingLogic {
 	{
 		//Register each of our listener objects here
 		vm.getCoinSlot().register(new CoinSlotListenerDevice(this));
-		for (int i = 0; i < vm.getNumberofCoinRacks(); i++) {
+		for (int i = 0; i < vm.getNumberOfCoinRacks(); i++) {
 			vm.getCoinRack(i).register(new CoinRackListenerDevice(this));
 		}
 		vm.getCoinReceptacle().register(new CoinReceptacleListenerDevice(this));
