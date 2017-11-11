@@ -1,4 +1,6 @@
-package groupAssignment2;
+package ca.ucalgary.seng300.a2;
+
+
 
 import org.lsmr.vending.Coin;
 import org.lsmr.vending.hardware.AbstractHardware;
@@ -8,14 +10,14 @@ import org.lsmr.vending.hardware.CoinReceptacleListener;
 
 public class CoinReceptacleListenerDevice implements CoinReceptacleListener{
 
-	private VendingLogic logic;
+	private VendingLogicInterface logic;
 	public int enabledCount = 0;
 	public int disabledCount = 0;
 	public int coinValue = 0;
 	public int coinCount = 0;
 	public boolean receptaclesFull = false;
 	
-	public CoinReceptacleListenerDevice(VendingLogic logic)
+	public CoinReceptacleListenerDevice(VendingLogicInterface logic)
 	{
 		this.logic = logic;
 	}
@@ -43,9 +45,10 @@ public class CoinReceptacleListenerDevice implements CoinReceptacleListener{
      *            The coin added.
      */
 	@Override
-	public void coinAdded(CoinReceptacle receptacle, Coin coin) {
+	public void coinAdded(CoinReceptacle receptacle, Coin coin) {	
 		coinValue += coin.getValue();
 		coinCount++;
+		
 		logic.getEventLog().writeToLog("Coin Receptacle was added with " + coinValue + "cents.");
 	}
 

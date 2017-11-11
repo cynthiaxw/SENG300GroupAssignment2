@@ -8,9 +8,9 @@ public class IndicatorLightListenerDevice implements IndicatorLightListener{
 	public int disabledCount = 0;
 	public boolean lightActivated = false;
 	public boolean lightDeactivated = false;
-	private VendingLogic logic;
+	private VendingLogicInterface logic;
 	
-	public IndicatorLightListenerDevice(VendingLogic logic)
+	public IndicatorLightListenerDevice(VendingLogicInterface logic)
 	{
 		this.logic = logic;
 		

@@ -7,9 +7,9 @@ import org.lsmr.vending.hardware.*;
 
 public class CoinSlotListenerDevice implements CoinSlotListener {
 
-	private VendingLogic logic;
+	private VendingLogicInterface logic;
 	
-	public CoinSlotListenerDevice(VendingLogic logic)
+	public CoinSlotListenerDevice(VendingLogicInterface logic)
 	{
 		this.logic = logic;
 		

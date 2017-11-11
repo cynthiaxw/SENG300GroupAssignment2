@@ -1,4 +1,4 @@
-package groupAssignment2;
+package ca.ucalgary.seng300.a2;
 
 import org.lsmr.vending.Coin;
 import org.lsmr.vending.hardware.AbstractHardware;
@@ -8,14 +8,14 @@ import org.lsmr.vending.hardware.CoinReturnListener;
 
 public class CoinReturnListenerDevice implements CoinReturnListener {
 
-	private VendingLogic logic;
+	private VendingLogicInterface logic;
 	public int enabledCount = 0;
 	public int disabledCount = 0;
 	public int deliveredCoinCount = 0;
 	public int deliveredCoinValue = 0;
 	public boolean returnsfull = false;
 	
-	public CoinReturnListenerDevice(VendingLogic logic)
+	public CoinReturnListenerDevice(VendingLogicInterface logic)
 	{
 		this.logic = logic;
 	}

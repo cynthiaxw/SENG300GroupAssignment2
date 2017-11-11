@@ -7,7 +7,7 @@ import org.lsmr.vending.hardware.*;
 
 public class CoinRackListenerDevice implements CoinRackListener{
 
-	private VendingLogic logic;
+	private VendingLogicInterface logic;
 	public int enabledCount = 0;
 	public int disabledCount = 0;
 	public int coinValue = 0;
@@ -15,7 +15,7 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	public boolean racksFull = false;
 	public boolean racksEmpty = false;
 	
-	public CoinRackListenerDevice (VendingLogic logic)
+	public CoinRackListenerDevice (VendingLogicInterface logic)
 	{
 		this.logic = logic;
 	}
