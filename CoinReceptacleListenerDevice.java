@@ -46,8 +46,7 @@ public class CoinReceptacleListenerDevice implements CoinReceptacleListener{
 	public void coinAdded(CoinReceptacle receptacle, Coin coin) {
 		coinValue += coin.getValue();
 		coinCount++;
-		int myRack = logic.findHardwareIndex(receptacle);
-		logic.getEventLog().writeToLog("Coin Receptacle #" + myRack + " was added with " + coinValue + "cents.");
+		logic.getEventLog().writeToLog("Coin Receptacle was added with " + coinValue + "cents.");
 	}
 
 	/**
@@ -61,8 +60,7 @@ public class CoinReceptacleListenerDevice implements CoinReceptacleListener{
 	public void coinsRemoved(CoinReceptacle receptacle) {
 		coinValue = 0;
 		coinCount = 0;
-		int myRack = logic.findHardwareIndex(receptacle);
-		logic.getEventLog().writeToLog("Coin Receptacle #" + myRack + " was removed with " + coinValue + "cents.");
+		logic.getEventLog().writeToLog("Coin Receptacle was removed with " + coinValue + "cents.");
 		
 	}
 
@@ -76,8 +74,7 @@ public class CoinReceptacleListenerDevice implements CoinReceptacleListener{
 	public void coinsFull(CoinReceptacle receptacle) {
 		if(receptacle.getCapacity()<=receptacle.size()) {
 			receptaclesFull = true;
-			int myRack = logic.findHardwareIndex(receptacle);
-			logic.getEventLog().writeToLog("Coin Receptacle #" + myRack + " is full.");
+			logic.getEventLog().writeToLog("Coin Receptacle is full.");
 		}
 		else receptaclesFull = false;
 	}
@@ -98,8 +95,7 @@ public class CoinReceptacleListenerDevice implements CoinReceptacleListener{
 			coinValue += coin.getValue();
 			coinCount ++;
 		}
-		int myRack = logic.findHardwareIndex(receptacle);
-		logic.getEventLog().writeToLog("Coin Receptacle #" + myRack + " was loaded with " + coinCount + "coins.");
+		logic.getEventLog().writeToLog("Coin Receptacle was loaded with " + coinCount + "coins.");
 		logic.getEventLog().writeToLog("Total loaded value is "+ coinValue);
 	}
 
@@ -119,8 +115,7 @@ public class CoinReceptacleListenerDevice implements CoinReceptacleListener{
 			coinValue -= coin.getValue();
 			coinCount --;
 		}
-		int myRack = logic.findHardwareIndex(receptacle);
-		logic.getEventLog().writeToLog("Coin Receptacle #" + myRack + " was unloaded with " + coinCount + "coins.");
+		logic.getEventLog().writeToLog("Coin Receptacle was unloaded with " + coinCount + "coins.");
 		logic.getEventLog().writeToLog("Total unloaded value is "+ coinValue);
 	}
 
