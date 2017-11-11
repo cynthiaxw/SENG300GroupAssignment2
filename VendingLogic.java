@@ -7,6 +7,7 @@ public class VendingLogic {
 	private VendingMachine vm;			// The vending machine that this logic program is installed on
 	private int credit;					// credit is saved in terms of cents 
 	private EventLog EL;
+	private Boolean[] circuitEnabled;
 	
 	public VendingLogic(VendingMachine vend)
 	{
@@ -14,6 +15,10 @@ public class VendingLogic {
 		credit = 0;
 		EL = new EventLog();
 		registerListeners();
+		circuitEnabled = new Boolean[vm.getNumberOfSelectionButtons()];
+		for (int i = 0; i < circuitEnabled.length; i++) {
+			circuitEnabled[i] = false;
+		}
 	}
 	
 	//getter for EL
@@ -121,6 +126,13 @@ public class VendingLogic {
 		vm.getDisplay().display("Despensing. Enjoy!");
 	}
 	
+	/**
+	 * A method to return change to the user
+	 */
+	public void returnChange() {
+		
+	}
+	
 	/** 
 	 * A method to determine what action should be done when a button is pressed 
 	 * TODO how is disabling a part going to affect what action is taken?
@@ -132,11 +144,11 @@ public class VendingLogic {
 		// search through the selection buttons to see if the parameter button is a selection button
 		for (int index = 0; (found == false) && (index < vm.getNumberOfSelectionButtons()); index++) {
 			if (vm.getSelectionButton(index) == button) {
-				if (vm.getPopKindCost(index) <= credit) {
+				if ((vm.getPopKindCost(index) <= credit) && (circuitEnabled[index] == true)) {
 					try {
 						vm.getPopCanRack(index).dispensePopCan();
 						this.dispensingMessage();
-						credit = 0;
+						credit = 0;   // TODO properly deduct price. return change if necessary.
 						this.displayCredit();
 					} catch (DisabledException e) {
 						// TODO Auto-generated catch block
@@ -149,11 +161,15 @@ public class VendingLogic {
 						e.printStackTrace();
 					}
 				}
+				else if (circuitEnabled[index] != true) {
+					vm.getDisplay().display("Option unavailable");
+				}
 				else {
 					this.displayPrice(index);
 					this.displayCredit();
-					found = true;
-				}		
+					
+				}
+				found = true;
 			}
 		}
 		
@@ -178,6 +194,99 @@ public class VendingLogic {
 		}
 			
 	}
-	
 
+	/**
+	 * A method to determine which pop can rack or push button an event has occurred on
+	 * needed for EventLog information
+	 * 
+	 * @param hardware - the hardware that the event occurred on 
+	 * @return The index of the hardware according to the vending machine. -1 means error could not find
+	 */
+	public int findHardwareIndex(AbstractHardware<? extends AbstractHardwareListener> hardware) {
+		
+		if (hardware instanceof PopCanRack) {
+			for (int index = 0; index < vm.getNumberOfPopCanRacks(); index++) {
+				if (vm.getPopCanRack(index) == hardware) {
+					return index;
+				}
+			}
+		}
+		
+		else if (hardware instanceof PushButton) {
+			for (int index = 0; index < vm.getNumberOfSelectionButtons(); index++) {
+				if (vm.getSelectionButton(index) == hardware) {
+					return index;
+				}
+			}
+			
+			for (int index = 0; index < 37; index++) {
+				if (vm.getConfigurationPanel().getButton(index) == hardware) {
+					return index;
+				}
+			}
+		}
+		
+		else if (hardware instanceof CoinRack)
+			for (int i = 0; i < vm.getNumberOfCoinRacks(); i++) {
+				if (hardware == vm.getCoinRack(i)) {
+					return i;
+				}
+			}
+		
+		return -1; // -1 will be the error index
+	}
+	
+	/**
+	 * Method to disable a piece of hardware. If hardware is a selection button or pop rack, machine can remain 
+	 *   operational, otherwise, disable vending machine 
+	 * @param hardware
+	 */
+	public void disableHardware(AbstractHardware<? extends AbstractHardwareListener> hardware) {
+		if (hardware instanceof PopCanRack) {
+			circuitEnabled[findHardwareIndex(hardware)] = false;
+			hardware.disable();
+		}
+		else if (hardware instanceof PushButton) {
+			for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {
+				if (hardware == vm.getSelectionButton(i)) {
+					circuitEnabled[i] = false;
+				}
+			}
+			hardware.disable();
+		}
+		else {
+			vm.getOutOfOrderLight().activate();
+			returnChange();
+			vm.enableSafety();
+			hardware.disable();
+		}
+	}
+	
+	/**
+	 * Method to disable a piece of hardware. If hardware is a selection button or pop rack, machine can remain 
+	 *   operational, otherwise, disable vending machine 
+	 * @param hardware
+	 */
+	public void enableHardware(AbstractHardware<? extends AbstractHardwareListener> hardware) {
+		if (hardware instanceof PopCanRack) {
+			int index = findHardwareIndex(hardware);
+			if ((vm.getSelectionButton(index).isDisabled() == false) && (vm.isSafetyEnabled() == false))
+				circuitEnabled[index] = true;
+			hardware.enable();
+		}
+		else if (hardware instanceof PushButton) {
+			for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {
+				if (hardware == vm.getSelectionButton(i)) {
+					circuitEnabled[i] = true;
+				}
+			}
+			hardware.disable();
+		}
+		else {
+			vm.getOutOfOrderLight().activate();
+			vm.enableSafety();
+			hardware.disable();
+		}
+	}
+	
 }
