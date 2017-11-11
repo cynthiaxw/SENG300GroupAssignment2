@@ -1,12 +1,14 @@
+package ca.ucalgary.seng300.a2;
+
 import org.lsmr.vending.*;
 import org.lsmr.vending.hardware.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class VendingLogic {
+public class VendingLogic implements VendingLogicInterface {
 	private VendingMachine vm;			// The vending machine that this logic program is installed on
 	private int credit;					// credit is saved in terms of cents 
-	private EventLog EL;
+	private EventLogInterface EL;
 	private Boolean[] circuitEnabled;
 	
 	public VendingLogic(VendingMachine vend)
@@ -22,7 +24,7 @@ public class VendingLogic {
 	}
 	
 	//getter for EL
-	public EventLog getEventLog(){
+	public EventLogInterface getEventLog(){
 		return EL;
 	}
 	

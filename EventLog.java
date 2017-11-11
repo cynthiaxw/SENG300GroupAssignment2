@@ -1,4 +1,4 @@
-package ca.ucalgary.seng300.a1;
+package ca.ucalgary.seng300.a2;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -6,7 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-public class EventLog {
+public class EventLog implements EventLogInterface {
 	PrintWriter writer;
 	public EventLog() {
 		try {
