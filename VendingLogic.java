@@ -27,11 +27,12 @@ public class VendingLogic {
 	
 	private void registerListeners()
 	{
-		//Register each of out listener objects here
+		//Register each of our listener objects here
 		vm.getCoinSlot().register(new CoinSlotListenerDevice(this));
-		vm.getCoinRack(0).register(new CoinRackListenerDevice(this)); //TODO Note that we can register for specific coin types, use the other register method
+		for (int i = 0; i < vm.getNumberofCoinRacks(); i++) {
+			vm.getCoinRack(i).register(new CoinRackListenerDevice(this));
+		}
 		vm.getCoinReceptacle().register(new CoinReceptacleListenerDevice(this));
-		//vm.getCoinReceptacle().register(new CoinReceptacleListenerDevice(this)); this was supposed to be the coinReturn
 		
 		try {
 			vm.getCoinReturn().register(new CoinReturnListenerDevice(this));}
