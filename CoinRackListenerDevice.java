@@ -23,11 +23,13 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	@Override
 	public void enabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
 	    enabledCount++;
+	    logic.enableHardware(hardware);
 	}
 
 	@Override
 	public void disabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
 	    disabledCount++;
+	    logic.disableHardware(hardware);
 	}
 
 	/**
@@ -40,6 +42,8 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	public void coinsFull(CoinRack rack) {
 		if(rack.getCapacity()<=rack.size()) {
 			racksFull = true;
+			int myRack = logic.findHardwareIndex(rack);
+			logic.getEventLog().writeToLog("Coin rack #" + myRack + " is full.");
 		}
 		else racksFull = false;
 	}
@@ -54,6 +58,8 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	public void coinsEmpty(CoinRack rack) {
 		if(rack.size() == 0) {
 			racksEmpty = true;
+			int myRack = logic.findHardwareIndex(rack);
+			logic.getEventLog().writeToLog("Coin rack #" + myRack + " is empty.");
 		}
 		else racksEmpty = false;
 		
@@ -72,7 +78,8 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	public void coinAdded(CoinRack rack, Coin coin) {
 		coinValue+=coin.getValue();
 		coinCount++;
-		
+		int myRack = logic.findHardwareIndex(rack);
+		logic.getEventLog().writeToLog("Coin rack #" + myRack + " was added with " + coinValue + "cents.");
 	}
 
 	/**
@@ -88,7 +95,8 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	public void coinRemoved(CoinRack rack, Coin coin) {
 		coinValue-=coin.getValue();
 		coinCount--;
-		
+		int myRack = logic.findHardwareIndex(rack);
+		logic.getEventLog().writeToLog("Coin rack #" + myRack + " was removed with " + coinValue + "cents.");
 	}
 
 	/**
@@ -106,7 +114,9 @@ public class CoinRackListenerDevice implements CoinRackListener{
 		for(Coin coin : coins) {
 			 coinAdded(rack, coin);
 		}
-		
+		int myRack = logic.findHardwareIndex(rack);
+		logic.getEventLog().writeToLog("Coin rack #" + myRack + " was loaded with " + coinCount + "coins.");
+		logic.getEventLog().writeToLog("Total loaded value is "+ coinValue);
 	}
 
 	/**
@@ -124,7 +134,9 @@ public class CoinRackListenerDevice implements CoinRackListener{
 		for(Coin coin : coins) {
 			coinRemoved(rack, coin);
 		}
-		
+		int myRack = logic.findHardwareIndex(rack);
+		logic.getEventLog().writeToLog("Coin rack #" + myRack + " was unloaded with " + coinCount + "coins.");
+		logic.getEventLog().writeToLog("Total unloaded value is "+ coinValue);
 	}
 
 	
