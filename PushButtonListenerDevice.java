@@ -9,9 +9,9 @@ import org.lsmr.vending.hardware.PushButton;
 
 public class PushButtonListenerDevice implements PushButtonListener {
 
-	private VendingLogic logic;
+	private VendingLogicInterface logic;
 	
-	public PushButtonListenerDevice(VendingLogic logic) {
+	public PushButtonListenerDevice(VendingLogicInterface logic) {
 		this.logic = logic;
 	}
 
