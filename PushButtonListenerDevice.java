@@ -10,10 +10,6 @@ import org.lsmr.vending.hardware.PushButton;
 public class PushButtonListenerDevice implements PushButtonListener {
 
 	private VendingLogic logic;
-
-	public int enabledCount = 0;
-	public int disabledCount = 0;
-	public int pressedCount = 0;
 	
 	public PushButtonListenerDevice(VendingLogic logic) {
 		this.logic = logic;
@@ -22,20 +18,20 @@ public class PushButtonListenerDevice implements PushButtonListener {
 	
 	@Override
 	public void pressed(PushButton button) {
-		pressedCount++;
+		logic.determineButtonAction(button);
 	}
 
 
 	@Override
 	public void enabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
-		enabledCount++;
+		logic.enableHardware(hardware);
 		
 	}
 
 
 	@Override
 	public void disabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
-		disabledCount++;
+		logic.disableHardware(hardware);
 		
 	}
 }
