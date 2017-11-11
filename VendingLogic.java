@@ -36,6 +36,7 @@ public class VendingLogic implements VendingLogicInterface {
 	{
 		//Register each of our listener objects here
 		vm.getCoinSlot().register(new CoinSlotListenerDevice(this));
+		vm.getDisplay().register(new DisplayListenerDevice(this));
 		for (int i = 0; i < vm.getNumberOfCoinRacks(); i++) {
 			vm.getCoinRack(i).register(new CoinRackListenerDevice(this));
 		}
