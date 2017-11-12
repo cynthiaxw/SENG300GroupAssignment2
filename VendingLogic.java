@@ -106,13 +106,13 @@ public class VendingLogic implements VendingLogicInterface {
 	
 	/**
 	 * Method to show that an invalid coin was inserted
+	 * TODO is this an acceptible way to wait for 5 seconds?
 	 */
 	public void invalidCoinInserted() {
 		vm.getDisplay().display("Invalid coin!");
 		try {
 			Thread.sleep(5000);					// wait for 5 seconds
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		this.displayCredit();
@@ -120,7 +120,7 @@ public class VendingLogic implements VendingLogicInterface {
 	
 	/**
 	 * Method called by the coinSlotListener to accumulate credit when valid coins are inserted.
-	 * Update the credit and update the display.  Recalculate if the 
+	 * Update the credit and update the display.  Recalculate if the exact change is possible
 	 * @param coin  The Coin that was inserted
 	 */
 	public void validCoinInserted(Coin coin) {
