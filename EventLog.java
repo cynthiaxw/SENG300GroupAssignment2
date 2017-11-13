@@ -37,29 +37,6 @@ public class EventLog implements EventLogInterface {
 		timeStamp();
 		writer.println(s + "\n");		
 	}
-	/*
-	JUST DO GENERIC WRITE METHOD FOR NOW
-	public void buttonPushed(String pname, int btnNum) {
-		//print the selection made
-		timeStamp();
-		writer.println("button: " + btnNum + " pushed. Selection is: " + pname + "\n");
-	}
-	public void coinInserted(int val, int crdt) {
-		//print value of coin, and total credit
-		timeStamp();
-		writer.println("Coin of value: " + val + " inserted. Credit: " + crdt + "\n");
-	}
-	public void changeReturned(int chng) {
-		//print how much change returned
-		timeStamp();
-		writer.println("Change has been returned in the amount of: " + chng + "\n");
-	}
-	public void popDispensed(String pName, int crd) {
-		//print which type of pop is dispensed
-		timeStamp();
-		writer.println(pName + " has been dispensed \t Credit is now: " + crd + "\n");
-	}
-	*/
 	
 	/**
 	* Method writes a time stamp in the format yyyy/MM/dd HH:mm:ss to the work log.
