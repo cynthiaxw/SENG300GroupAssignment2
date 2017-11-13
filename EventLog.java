@@ -15,9 +15,7 @@ public class EventLog implements EventLogInterface {
 		
 	/**
 	* Constructor creates an event log file and writes base contents. 
-	* File name is "WorkLog.txt", formatted in UTF-8
-	* TODO: I suggest that the constructor throws an error rather than catch it so that we dont 
-	* not write the event log in some case.
+	* File name is "EventLog.txt", formatted in UTF-8
 	 * @throws UnsupportedEncodingException 
 	 * @throws FileNotFoundException 
 	*/
