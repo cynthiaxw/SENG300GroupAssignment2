@@ -12,7 +12,7 @@ public class VendingLogic implements VendingLogicInterface {
 	private int credit;					// credit is saved in terms of cents 
 	private EventLogInterface EL;				// An even logger used to track vending machine interactions
 	private Boolean[] circuitEnabled;			// an array used for custom configurations
-	private boolean debug = true;
+	private boolean debug = false;				//Print debug messages or not
 	private String currentMessage ="";	
 	/**
 	*This constructor uses a vending machine as a paramter, then creates and assigns listeners to it.
