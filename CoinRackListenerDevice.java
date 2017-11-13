@@ -8,6 +8,7 @@ import org.lsmr.vending.hardware.*;
 public class CoinRackListenerDevice implements CoinRackListener{
 
 	private VendingLogicInterface logic;
+	//TODO These should not be public variables. We should use getters for these.
 	public int enabledCount = 0;
 	public int disabledCount = 0;
 	public int coinValue = 0;
@@ -18,8 +19,8 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	
 	/**
 	* Constructor creates the listener and assigns a logic to it
-	* @param
-	* @return 
+	* @param VendingLogicInterface Logic that the listener interacts with
+	* 
 	*/
 	public CoinRackListenerDevice (VendingLogicInterface logic)
 	{
