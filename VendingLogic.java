@@ -444,7 +444,7 @@ public class VendingLogic implements VendingLogicInterface {
 			}
 		}
 		else {
-			if (vm.isSafetyEnabled()) {
+			if (!vm.isSafetyEnabled()) {
 				returnChange();
 				vm.enableSafety();
 			}
