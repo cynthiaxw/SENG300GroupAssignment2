@@ -52,6 +52,15 @@ public class VendingLogic implements VendingLogicInterface {
 	}
 	
 	/**
+	* this method sets the contents of the display, called by displayListenerDevice
+	* @param String x is the new message
+	* @return void
+	*/
+	public void setCurrentMessage(String x){
+		currentMessage = x;	
+	}
+	
+	/**
 	* This method returns the the credit total that the vending machine has
 	* @param None
 	* @return Int credit
