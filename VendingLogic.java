@@ -145,27 +145,32 @@ public class VendingLogic implements VendingLogicInterface {
 	 * A method to return change to the user
 	 */
 	public void returnChange() {
-		int[] coinKinds = {200, 100, 25, 10, 5};		// legal value of Canadian coins. only types returned
-		for (int i = 0; i < coinKinds.length; i++) {
-			CoinRack rack = vm.getCoinRackForCoinKind(coinKinds[i]);		// the coin rack for the coin value indicated by the loop
-			if (rack != null) {									// if rack = null. coin kind is not a valid change option
-				while ((!vm.isSafetyEnabled()) && (credit > coinKinds[i]) && (!rack.isDisabled()) && (rack.size() > 0)) {
-					try {
-						rack.releaseCoin();
-						credit -= coinKinds[i];			// subtracting (i) cents from the credit
-					} catch (CapacityExceededException e) {
-						// should never happen, receptacle full should enable the safety, which is in the loop guard
-						e.printStackTrace();
-					} catch (EmptyException e) {
-						// should never happen, checked for in the loop guard
-						e.printStackTrace();
-					} catch (DisabledException e) {
-						// should never happen, checked for in the loop guard
-						e.printStackTrace();
+		if (vm.getCoinReturn() != null) {
+			int[] coinKinds = {200, 100, 25, 10, 5};		// legal value of Canadian coins. only types returned
+			for (int i = 0; i < coinKinds.length; i++) {
+				CoinRack rack = vm.getCoinRackForCoinKind(coinKinds[i]);		// the coin rack for the coin value indicated by the loop
+				if (rack != null) {									// if rack = null. coin kind is not a valid change option
+					while ((!vm.isSafetyEnabled()) && (credit > coinKinds[i]) && (!rack.isDisabled()) && (rack.size() > 0)) {
+						try {
+							rack.releaseCoin();
+							credit -= coinKinds[i];			// subtracting (i) cents from the credit
+						} catch (CapacityExceededException e) {
+							// should never happen, receptacle full should enable the safety, which is in the loop guard
+							e.printStackTrace();
+						} catch (EmptyException e) {
+							// should never happen, checked for in the loop guard
+							e.printStackTrace();
+						} catch (DisabledException e) {
+							// should never happen, checked for in the loop guard
+							e.printStackTrace();
+						}
 					}
 				}
 			}
 		}
+		else
+			vm.getDisplay().display("Unable to return any changed");
+		
 		if (!isExactChangePossible())
 			vm.getExactChangeLight().activate();
 		else 
@@ -181,28 +186,32 @@ public class VendingLogic implements VendingLogicInterface {
 	 */
 	public boolean isExactChangePossible() {
 		boolean possible = true;
-		for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {		// get the price for every possible pop
-			int credRemaining = credit;
-			int price = vm.getPopKindCost(i);
-			if (credRemaining >= price) {
-				credRemaining -= price;
-				int changePossible = 0;
-				
-				int[] coinKinds = {200, 100, 25, 10, 5};		// legal value of Canadian coins. only types returned
-				for (int value = 0; value < coinKinds.length; value++) {
-					CoinRack rack = vm.getCoinRackForCoinKind(coinKinds[value]);		// the coin rack for the coin value indicated by the loop
-					if (rack != null) {									// if rack = null. coin kind is not a valid change option
-						int coinsNeeded = 0;
-						while ((!rack.isDisabled()) && (credRemaining > changePossible) && (rack.size() > coinsNeeded)) {
-							coinsNeeded++;
-							changePossible += coinKinds[value];			// sum of available coins
+		if (vm.getCoinReturn() != null) {
+			for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {		// get the price for every possible pop
+				int credRemaining = credit;
+				int price = vm.getPopKindCost(i);
+				if (credRemaining >= price) {
+					credRemaining -= price;
+					int changePossible = 0;
+
+					int[] coinKinds = {200, 100, 25, 10, 5};		// legal value of Canadian coins. only types returned
+					for (int value = 0; value < coinKinds.length; value++) {
+						CoinRack rack = vm.getCoinRackForCoinKind(coinKinds[value]);		// the coin rack for the coin value indicated by the loop
+						if (rack != null) {									// if rack = null. coin kind is not a valid change option
+							int coinsNeeded = 0;
+							while ((!rack.isDisabled()) && (credRemaining > changePossible) && (rack.size() > coinsNeeded)) {
+								coinsNeeded++;
+								changePossible += coinKinds[value];			// sum of available coins
+							}
 						}
 					}
+					if (credRemaining != changePossible)		// if after going through all the coin racks, the exact change cannot be created
+						possible = false;			//  return that it is not possible to 
 				}
-				if (credRemaining != changePossible)			// if after going through all the coin racks, the exact change cannot be created
-					possible = false;			//  return that it is not possible to 
 			}
 		}
+		else 
+			possible = false;			// if the CoinReturn is not there (null) return false.
 		
 		return possible;
 	}
