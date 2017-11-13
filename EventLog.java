@@ -1,4 +1,4 @@
-package ca.ucalgary.seng300.a2;
+package groupAssignment2;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -10,7 +10,8 @@ public class EventLog implements EventLogInterface {
 	
 	
 	private PrintWriter writer;
-	
+	private int lineCount = 0;
+	private int iteration = 0;
 		
 	/**
 	* Constructor creates an event log file and writes base contents. 
@@ -20,10 +21,10 @@ public class EventLog implements EventLogInterface {
 	*/
 	public EventLog() {
 		try {
-			writer = new PrintWriter("WorkLog.txt", "UTF-8");
+			writer = new PrintWriter("EventLog.txt", "UTF-8");
 			writer.println("DATE/TIME \t\t EVENT");
 		} catch (FileNotFoundException | UnsupportedEncodingException e) {
-			System.out.println("trouble creating WorkLog file");
+			System.out.println("trouble creating EventLog file");
 			e.printStackTrace();
 		}		
 	}
@@ -34,8 +35,24 @@ public class EventLog implements EventLogInterface {
 	* !!TODO!! writer may not exist if the constructor throws an error
 	*/
 	public void writeToLog(String s){
+	/*
+	 * If the EventLog reaches 500 lines log make a new EventLog
+	 */
+		if(lineCount >= 500) {
+			iteration++;
+			String it = Integer.toString(iteration);	//converts iteration to string to add to filename
+			try {
+				writer = new PrintWriter("EventLog" + it + ".txt", "UTF-8");
+			} catch (FileNotFoundException | UnsupportedEncodingException e) {
+				System.out.println("Trouble creating EventLog file");
+				e.printStackTrace();
+			}
+			lineCount = 1;
+		}		
+		
 		timeStamp();
-		writer.println(s + "\n");		
+		writer.println(s + "\n");
+		lineCount++;
 	}
 	
 	/**
