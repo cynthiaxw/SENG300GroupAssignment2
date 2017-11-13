@@ -24,6 +24,7 @@ import org.lsmr.vending.Coin;
 import org.lsmr.vending.hardware.DisabledException;
 import org.lsmr.vending.hardware.VendingMachine;
 
+
 public class TestVendingLogic {
 
 	private VendingMachine vm;
@@ -197,14 +198,49 @@ public class TestVendingLogic {
 	}
 	
 	@Test
-	public void test_EnableHardware()
+	public void test_EnableHardware_arbitraryHardware()
 	{
 		try {
 			setup();
 			vm.getCoinSlot().disable();
 			boolean disabled = !vm.getCoinSlot().isDisabled();
-			logic.disableHardware(vm.getCoinSlot());
+			logic.enableHardware(vm.getCoinSlot());
 			assertTrue(vm.getCoinSlot().isDisabled() != disabled);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	@Test
+	public void test_EnableHardware_arbitraryHardware_Pop()
+	{
+		try {
+			setup();
+			vm.getPopCanRack(0).disable();
+			boolean disabled = !vm.getPopCanRack(0).isDisabled();
+			logic.enableHardware(vm.getPopCanRack(0));
+			assertTrue(vm.getPopCanRack(0).isDisabled() != disabled);
+		}
+		catch(Exception e)
+		{
+			System.out.println(e);
+		}
+	}
+	
+	/**
+	 * 
+	 */
+	@Test
+	public void test_EnableHardware_arbitraryHardware_Button()
+	{
+		try {
+			setup();
+			vm.getSelectionButton(0).disable();
+			boolean disabled = !vm.getSelectionButton(0).isDisabled();
+			logic.enableHardware(vm.getSelectionButton(0));
+			assertTrue(vm.getSelectionButton(0).isDisabled() != disabled);
 		}
 		catch(Exception e)
 		{
@@ -233,6 +269,185 @@ public class TestVendingLogic {
 			fail();
 		}
 		
+	}
+	
+
+	/**
+	 * Tests that the display is correct
+	 */
+	@Test
+	public void test_welcomeMessage()
+	{
+		setup();
+		logic.welcomeMessage();
+		assertTrue(compareCurrentMessage("Welcome"));
+	}
+	
+	/**
+	 * Tests that the display is correct
+	 */
+	@Test
+	public void test_vendOutOfOrder()
+	{
+		setup();
+		logic.vendOutOfOrder();
+		assertTrue(compareCurrentMessage("OutOfOrder"));
+	}
+	
+	/**
+	 * Tests that the display is correct
+	 */
+	@Test
+	public void displayCredit()
+	{
+		setup();
+		logic.displayCredit();
+		assertTrue(compareCurrentMessage("Current Credit: $0.0"));
+	}
+	
+	/**
+	 * Tests that the display is correct
+	 */
+	@Test
+	public void test_displayPrice()
+	{
+		setup();
+		logic.displayPrice(0);
+		System.out.println(logic.getCurrentMessage());
+		//Note that the this is correct! displayPrice calls displayCredit() before it returns
+		assertTrue(compareCurrentMessage("Current Credit: $0.0"));
+	}
+	
+	/**
+	 * Tests that the display is correct
+	 */
+	@Test
+	public void test_dispensingMessage()
+	{
+		setup();
+		logic.dispensingMessage();
+		assertTrue(compareCurrentMessage("Despensing. Enjoy!"));
+	}
+	
+	/**
+	 * Method checks to see if the timer throws any exceptions
+	 *TODO fix implementation
+	 */
+	@Test
+	public void test_welcomeMessagetimer()
+	{
+		try {
+			setup();
+			logic.welcomeMessageTimer();
+		}catch(Exception e)
+		{
+			System.out.println("*** : " + e);
+			fail();
+		}
+	}
+
+	/**
+	 * Method teststhe right index is found
+	 */
+	@Test
+	public void test_findHardwareIndex_Pop()
+	{
+		setup();
+		assertTrue(logic.findHardwareIndex(vm.getPopCanRack(0))==0);
+	}
+
+	/**
+	 * Method teststhe right index is found
+	 */
+	@Test
+	public void test_findHardwareIndex_SelectButton()
+	{
+		setup();
+		assertTrue(logic.findHardwareIndex(vm.getSelectionButton(2))==2);
+	}
+	
+	/**
+	 * Method checks that the method returns the error flag, which should cause an exception if used as an array index
+	 */
+	@Test
+	public void test_findHardwareIndex_ConfigButton()
+	{
+		setup();
+		assertTrue(logic.findHardwareIndex(vm.getConfigurationPanel().getButton(0))==-1);
+	}
+	//DetermineActionButton will be used in the future, so for we test that no exceptions are thrown
+	
+	/**
+	 * Method tests to see that this does not throw an exception
+	 */
+	@Test
+	public void test_determineButtonAction_selectionButton()
+	{
+		try {
+		setup();
+		logic.determineButtonAction(vm.getSelectionButton(0));
+		}catch(Exception e)
+		{
+			fail();
+		}
+		assertTrue(true);
+	}
+	
+	/**
+	 * Method tests to see that this does not throw an exception
+	 */
+	@Test
+	public void test_determineButtonAction_config() {
+		try {
+			setup();
+			logic.determineButtonAction(vm.getConfigurationPanel().getButton(0));
+		}catch(Exception e)
+		{
+			fail();
+		}
+		assertTrue(true);
+	}
+	
+	/**
+	 * Method tests to see that this does not throw an exception
+	 */
+	@Test
+	public void test_determineButtonAction_config_enter()
+	{
+		try {
+			setup();
+			logic.determineButtonAction(vm.getConfigurationPanel().getEnterButton());
+		}catch(Exception e)
+		{
+			fail();
+		}
+		assertTrue(true);
+	}
+	
+	/**
+	 * Method tests to see that this does not throw an exception
+	 */
+	@Test
+	public void test_determineButtonAction_invalid()
+	{
+		try {
+			setup();
+			logic.determineButtonAction(new PushButton());
+		}catch(Exception e)
+		{
+			assertTrue(true);
+		}
+	}
+	
+	
+	/**
+	 * Method compares the current message to a string, returns true if they are equal
+	 * @param String m, the message to compare to
+	 * @return boolean based on the compareTo of the two strings
+	 */
+	private boolean compareCurrentMessage(String m)
+	{
+		return (logic.getCurrentMessage().compareTo(m)== 0);
 	}
 	
 	/**
