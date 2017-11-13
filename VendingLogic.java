@@ -1,51 +1,84 @@
+package ca.ucalgary.seng300.a2;
+
 import org.lsmr.vending.*;
 import org.lsmr.vending.hardware.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class VendingLogic {
-	private VendingMachine vm;			// The vending machine that this logic program is installed on
+public class VendingLogic implements VendingLogicInterface {
+	private VendingMachine vm;				// The vending machine that this logic program is installed on
 	private int credit;					// credit is saved in terms of cents 
-	private EventLog EL;
-	private Boolean[] circuitEnabled;
+	private EventLogInterface EL;				// An even logger used to track vending machine interactions
+	private Boolean[] circuitEnabled;			// an array used for custom configurations
 	
+	/**
+	*This constructor uses a vending machine as a paramter, then creates and assigns listeners to it.
+	*
+	*@param VendingMachine vend is the the machine that the listeners will be registered to.
+	*@return a new instance of a VendingLogic object
+	*
+	*/
 	public VendingLogic(VendingMachine vend)
 	{
+		//Set up attributes
 		this.vm = vend;
 		credit = 0;
 		EL = new EventLog();
 		registerListeners();
+		
+		//Set up the custom configuration
 		circuitEnabled = new Boolean[vm.getNumberOfSelectionButtons()];
 		for (int i = 0; i < circuitEnabled.length; i++) {
 			circuitEnabled[i] = false;
 		}
 	}
 	
-	//getter for EL
-	public EventLog getEventLog(){
+	/**
+	* This method returns the event logger
+	* @param None
+	* @return EventLogInterface El
+	*/
+	public EventLogInterface getEventLog(){
 		return EL;
 	}
 	
+	/**
+	* This method returns the the credit total that the vending machine has
+	* @param None
+	* @return Int credit
+	*/
 	public int getCurrencyValue(){
 		return credit;
 	}
 	
+	/**
+	* This method creates and registers listeners for the vending machine.
+	* @param None
+	* @return None
+	*/
 	private void registerListeners()
 	{
 		//Register each of our listener objects here
 		vm.getCoinSlot().register(new CoinSlotListenerDevice(this));
+		vm.getDisplay().register(new DisplayListenerDevice(this));
+		
+		//For each coin rack create and register a listener
 		for (int i = 0; i < vm.getNumberOfCoinRacks(); i++) {
 			vm.getCoinRack(i).register(new CoinRackListenerDevice(this));
 		}
 		vm.getCoinReceptacle().register(new CoinReceptacleListenerDevice(this));
 		
+		//!!The current version of the vending machine is bugged. The coin return is never instantiated.!!
+		// This means we are unable to register to the coin return, as we get a null pointer.
 		try {
 			vm.getCoinReturn().register(new CoinReturnListenerDevice(this));}
 		catch(Exception e)
 		{
+			//This will print out the null pointer error
 			System.out.println(e);
 		}
 		
+		//For each button create and register a listener
 		for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {
 			vm.getSelectionButton(i).register(new PushButtonListenerDevice(this));
 		}
@@ -59,12 +92,15 @@ public class VendingLogic {
 	}
 	
 	/**
-	 * Method for displaying a message for 5 seconds and erase it for 10s, if credit in VM is zero.
-	 */
-	
+	* Method for displaying a message for 5 seconds and erase it for 10s, if credit in VM is zero.
+	* @param None
+	* @return None
+	*/
 	public void welcomeMessageTimer(){
 		TimerTask task = new MyTimer(vm);
 		Timer timer = new Timer();
+		
+		//Default message timer
 		while (credit == 0){
 			timer.schedule(task, 10000, 5000);
 		}
@@ -103,19 +139,32 @@ public class VendingLogic {
 	
 	/**
 	 * Method to show that an invalid coin was inserted
+	 * TODO is this an acceptible way to wait for 5 seconds?
 	 */
 	public void invalidCoinInserted() {
 		vm.getDisplay().display("Invalid coin!");
+		try {
+			Thread.sleep(5000);			// wait for 5 seconds
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		this.displayCredit();
 	}
 	
 	/**
 	 * Method called by the coinSlotListener to accumulate credit when valid coins are inserted.
-	 * Update the credit and update the display 
+	 * Update the credit and update the display.  Recalculate if the exact change is possible
 	 * @param coin  The Coin that was inserted
 	 */
 	public void validCoinInserted(Coin coin) {
 		credit += coin.getValue();
+		
+		//Light the exact change light based on attempted change output
+		if (!isExactChangePossible())
+			vm.getExactChangeLight().activate();
+		else 
+			vm.getExactChangeLight().deactivate();
+		
 		this.displayCredit();
 	}
 	
@@ -130,7 +179,75 @@ public class VendingLogic {
 	 * A method to return change to the user
 	 */
 	public void returnChange() {
+		if (vm.getCoinReturn() != null) {
+			int[] coinKinds = {200, 100, 25, 10, 5};		// legal value of Canadian coins. only types returned
+			for (int i = 0; i < coinKinds.length; i++) {
+				CoinRack rack = vm.getCoinRackForCoinKind(coinKinds[i]);		// the coin rack for the coin value indicated by the loop
+				if (rack != null) {									// if rack = null. coin kind is not a valid change option
+					while ((!vm.isSafetyEnabled()) && (credit > coinKinds[i]) && (!rack.isDisabled()) && (rack.size() > 0)) {
+						try {
+							rack.releaseCoin();
+							credit -= coinKinds[i];			// subtracting (i) cents from the credit
+						} catch (CapacityExceededException e) {
+							// should never happen, receptacle full should enable the safety, which is in the loop guard
+							e.printStackTrace();
+						} catch (EmptyException e) {
+							// should never happen, checked for in the loop guard
+							e.printStackTrace();
+						} catch (DisabledException e) {
+							// should never happen, checked for in the loop guard
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		}
+		else
+			vm.getDisplay().display("Unable to return any changed");
 		
+		if (!isExactChangePossible())
+			vm.getExactChangeLight().activate();
+		else 
+			vm.getExactChangeLight().deactivate();
+	}
+	
+	/**
+	 * a Method to determine if exact change is possible given the prices of the pop and the current credit
+	 * Checks if the credit - price can be created using the available coins is the racks
+	 * checks for every pop price in the machine.
+	 *   
+	 * @return possible - A boolean describing if it is possible to create change for every possible transaction.
+	 */
+	public boolean isExactChangePossible() {
+		boolean possible = true;
+		if (vm.getCoinReturn() != null) {
+			for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {		// get the price for every possible pop
+				int credRemaining = credit;
+				int price = vm.getPopKindCost(i);
+				if (credRemaining >= price) {
+					credRemaining -= price;
+					int changePossible = 0;
+
+					int[] coinKinds = {200, 100, 25, 10, 5};		// legal value of Canadian coins. only types returned
+					for (int value = 0; value < coinKinds.length; value++) {
+						CoinRack rack = vm.getCoinRackForCoinKind(coinKinds[value]);		// the coin rack for the coin value indicated by the loop
+						if (rack != null) {									// if rack = null. coin kind is not a valid change option
+							int coinsNeeded = 0;
+							while ((!rack.isDisabled()) && (credRemaining > changePossible) && (rack.size() > coinsNeeded)) {
+								coinsNeeded++;
+								changePossible += coinKinds[value];			// sum of available coins
+							}
+						}
+					}
+					if (credRemaining != changePossible)		// if after going through all the coin racks, the exact change cannot be created
+						possible = false;			//  return that it is not possible to 
+				}
+			}
+		}
+		else 
+			possible = false;			// if the CoinReturn is not there (null) return false.
+		
+		return possible;
 	}
 	
 	/** 
@@ -141,35 +258,13 @@ public class VendingLogic {
 	public void determineButtonAction(PushButton button) {
 		boolean found = false;
 		
-		// search through the selection buttons to see if the parameter button is a selection button
-		for (int index = 0; (found == false) && (index < vm.getNumberOfSelectionButtons()); index++) {
-			if (vm.getSelectionButton(index) == button) {
-				if ((vm.getPopKindCost(index) <= credit) && (circuitEnabled[index] == true)) {
-					try {
-						vm.getPopCanRack(index).dispensePopCan();
-						this.dispensingMessage();
-						credit = 0;   // TODO properly deduct price. return change if necessary.
-						this.displayCredit();
-					} catch (DisabledException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (EmptyException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (CapacityExceededException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+		if (vm.isSafetyEnabled() == false) {
+			// search through the selection buttons to see if the parameter button is a selection button
+			for (int index = 0; (found == false) && (index < vm.getNumberOfSelectionButtons()); index++) {
+				if (vm.getSelectionButton(index) == button) {
+					selectionButtonAction(index);
+					found = true;
 				}
-				else if (circuitEnabled[index] != true) {
-					vm.getDisplay().display("Option unavailable");
-				}
-				else {
-					this.displayPrice(index);
-					this.displayCredit();
-					
-				}
-				found = true;
 			}
 		}
 		
@@ -195,6 +290,41 @@ public class VendingLogic {
 			
 	}
 
+	/**
+	 * Method to react to the press of a selection button
+	 * @param index - the index of the selection button that was pressed
+	 */
+	public void selectionButtonAction(int index) {
+		if ((vm.getPopKindCost(index) <= credit) && (circuitEnabled[index] == true)) {
+			try {
+				vm.getPopCanRack(index).dispensePopCan();
+				this.dispensingMessage();
+				credit -= vm.getPopKindCost(index);		// deduct the price of the pop
+				returnChange();
+				if (credit == 0)
+					this.welcomeMessage();
+				else
+					this.displayCredit();
+			} catch (DisabledException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (EmptyException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (CapacityExceededException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if (circuitEnabled[index] != true) {
+			vm.getDisplay().display("Option unavailable");
+		}
+		else {
+			this.displayPrice(index);
+			this.displayCredit();
+		}
+	}
+	
 	/**
 	 * A method to determine which pop can rack or push button an event has occurred on
 	 * needed for EventLog information
@@ -244,7 +374,6 @@ public class VendingLogic {
 	public void disableHardware(AbstractHardware<? extends AbstractHardwareListener> hardware) {
 		if (hardware instanceof PopCanRack) {
 			circuitEnabled[findHardwareIndex(hardware)] = false;
-			hardware.disable();
 		}
 		else if (hardware instanceof PushButton) {
 			for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {
@@ -252,13 +381,11 @@ public class VendingLogic {
 					circuitEnabled[i] = false;
 				}
 			}
-			hardware.disable();
 		}
 		else {
 			vm.getOutOfOrderLight().activate();
 			returnChange();
 			vm.enableSafety();
-			hardware.disable();
 		}
 	}
 	
@@ -272,7 +399,6 @@ public class VendingLogic {
 			int index = findHardwareIndex(hardware);
 			if ((vm.getSelectionButton(index).isDisabled() == false) && (vm.isSafetyEnabled() == false))
 				circuitEnabled[index] = true;
-			hardware.enable();
 		}
 		else if (hardware instanceof PushButton) {
 			for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {
@@ -280,12 +406,10 @@ public class VendingLogic {
 					circuitEnabled[i] = true;
 				}
 			}
-			hardware.disable();
 		}
 		else {
-			vm.getOutOfOrderLight().activate();
-			vm.enableSafety();
-			hardware.disable();
+			vm.getOutOfOrderLight().deactivate();
+			vm.disableSafety();
 		}
 	}
 	
