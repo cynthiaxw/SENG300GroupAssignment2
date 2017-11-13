@@ -195,7 +195,7 @@ public class TestCoinReceptacleListenerDevice {
 	}
 
 	/**
-	* Tests to that the lgoci handles valid coins
+	* Tests to that the logic handles valid coins
 	* @throws CapacityExceededException, DisabledException
 	*/
 	@Test
