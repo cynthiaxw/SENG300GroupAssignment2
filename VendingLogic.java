@@ -6,49 +6,79 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class VendingLogic implements VendingLogicInterface {
-	private VendingMachine vm;			// The vending machine that this logic program is installed on
+	private VendingMachine vm;				// The vending machine that this logic program is installed on
 	private int credit;					// credit is saved in terms of cents 
-	private EventLogInterface EL;
-	private Boolean[] circuitEnabled;
+	private EventLogInterface EL;				// An even logger used to track vending machine interactions
+	private Boolean[] circuitEnabled;			// an array used for custom configurations
 	
+	/**
+	*This constructor uses a vending machine as a paramter, then creates and assigns listeners to it.
+	*
+	*@param VendingMachine vend is the the machine that the listeners will be registered to.
+	*@return a new instance of a VendingLogic object
+	*
+	*/
 	public VendingLogic(VendingMachine vend)
 	{
+		//Set up attributes
 		this.vm = vend;
 		credit = 0;
 		EL = new EventLog();
 		registerListeners();
+		
+		//Set up the custom configuration
 		circuitEnabled = new Boolean[vm.getNumberOfSelectionButtons()];
 		for (int i = 0; i < circuitEnabled.length; i++) {
 			circuitEnabled[i] = false;
 		}
 	}
 	
-	//getter for EL
+	/**
+	* This method returns the event logger
+	* @param None
+	* @return EventLogInterface El
+	*/
 	public EventLogInterface getEventLog(){
 		return EL;
 	}
 	
+	/**
+	* This method returns the the credit total that the vending machine has
+	* @param None
+	* @return Int credit
+	*/
 	public int getCurrencyValue(){
 		return credit;
 	}
 	
+	/**
+	* This method creates and registers listeners for the vending machine.
+	* @param None
+	* @return None
+	*/
 	private void registerListeners()
 	{
 		//Register each of our listener objects here
 		vm.getCoinSlot().register(new CoinSlotListenerDevice(this));
 		vm.getDisplay().register(new DisplayListenerDevice(this));
+		
+		//For each coin rack create and register a listener
 		for (int i = 0; i < vm.getNumberOfCoinRacks(); i++) {
 			vm.getCoinRack(i).register(new CoinRackListenerDevice(this));
 		}
 		vm.getCoinReceptacle().register(new CoinReceptacleListenerDevice(this));
 		
+		//!!The current version of the vending machine is bugged. The coin return is never instantiated.!!
+		// This means we are unable to register to the coin return, as we get a null pointer.
 		try {
 			vm.getCoinReturn().register(new CoinReturnListenerDevice(this));}
 		catch(Exception e)
 		{
+			//This will print out the null pointer error
 			System.out.println(e);
 		}
 		
+		//For each button create and register a listener
 		for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {
 			vm.getSelectionButton(i).register(new PushButtonListenerDevice(this));
 		}
@@ -62,12 +92,15 @@ public class VendingLogic implements VendingLogicInterface {
 	}
 	
 	/**
-	 * Method for displaying a message for 5 seconds and erase it for 10s, if credit in VM is zero.
-	 */
-	
+	* Method for displaying a message for 5 seconds and erase it for 10s, if credit in VM is zero.
+	* @param None
+	* @return None
+	*/
 	public void welcomeMessageTimer(){
 		TimerTask task = new MyTimer(vm);
 		Timer timer = new Timer();
+		
+		//Default message timer
 		while (credit == 0){
 			timer.schedule(task, 10000, 5000);
 		}
@@ -111,7 +144,7 @@ public class VendingLogic implements VendingLogicInterface {
 	public void invalidCoinInserted() {
 		vm.getDisplay().display("Invalid coin!");
 		try {
-			Thread.sleep(5000);					// wait for 5 seconds
+			Thread.sleep(5000);			// wait for 5 seconds
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -126,6 +159,7 @@ public class VendingLogic implements VendingLogicInterface {
 	public void validCoinInserted(Coin coin) {
 		credit += coin.getValue();
 		
+		//Light the exact change light based on attempted change output
 		if (!isExactChangePossible())
 			vm.getExactChangeLight().activate();
 		else 
