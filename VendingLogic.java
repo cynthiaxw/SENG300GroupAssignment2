@@ -5,12 +5,13 @@ import org.lsmr.vending.hardware.*;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
 public class VendingLogic implements VendingLogicInterface {
 	private VendingMachine vm;				// The vending machine that this logic program is installed on
 	private int credit;					// credit is saved in terms of cents 
 	private EventLogInterface EL;				// An even logger used to track vending machine interactions
 	private Boolean[] circuitEnabled;			// an array used for custom configurations
-	
+	private boolean debug = true;
 	/**
 	*This constructor uses a vending machine as a paramter, then creates and assigns listeners to it.
 	*
@@ -75,20 +76,24 @@ public class VendingLogic implements VendingLogicInterface {
 		catch(Exception e)
 		{
 			//This will print out the null pointer error
-			System.out.println(e);
+			System.out.println("Coin return not instantiated! " + e);
 		}
 		
 		//For each button create and register a listener
 		for (int i = 0; i < vm.getNumberOfSelectionButtons(); i++) {
 			vm.getSelectionButton(i).register(new PushButtonListenerDevice(this));
 		}
-		
+		try {
 		// Configuration Panel has 37 buttons.  This is a hard coded value.
 		for (int i = 0; i < 37; i++) {
 			vm.getConfigurationPanel().getButton(i).register(new PushButtonListenerDevice(this));
 		}
 		
 		vm.getConfigurationPanel().getEnterButton().register(new PushButtonListenerDevice(this));
+		}catch(Exception e)
+		{
+			System.out.println("Invalid config setup");
+		}
 	}
 	
 	/**
@@ -117,7 +122,7 @@ public class VendingLogic implements VendingLogicInterface {
 	 * A method to send an OutOfOrder message to the display
 	 */
 	public void vendOutOfOrder() {
-		vm.enableSafety();
+		//vm.enableSafety(); NOTE: Due to a current bug in the Vending Machine, this results in a stack overflow error
 		vm.getDisplay().display("OutOfOrder");
 	}
 	
@@ -180,7 +185,7 @@ public class VendingLogic implements VendingLogicInterface {
 	 */
 	public void returnChange() {
 		if (vm.getCoinReturn() != null) {
-			int[] coinKinds = {200, 100, 25, 10, 5};		// legal value of Canadian coins. only types returned
+			int[] coinKinds = getVmCoinKinds(); //vm.getCoinKindForCoinRack(0);// {200, 100, 25, 10, 5};		// legal value of Canadian coins. only types returned
 			for (int i = 0; i < coinKinds.length; i++) {
 				CoinRack rack = vm.getCoinRackForCoinKind(coinKinds[i]);		// the coin rack for the coin value indicated by the loop
 				if (rack != null) {									// if rack = null. coin kind is not a valid change option
@@ -209,6 +214,42 @@ public class VendingLogic implements VendingLogicInterface {
 			vm.getExactChangeLight().activate();
 		else 
 			vm.getExactChangeLight().deactivate();
+	}
+	
+	
+	/**
+	 * Method finds out what coin kinds are used in the vending machine based on the number of coin racks.
+	 * @return int[] coinKinds, for example {5, 10, 25, 100, 200} for canadaian currency
+	 */
+	public int[] getVmCoinKinds()
+	{
+		//first we find how many coin kinds there are
+		int coinTypes = 0;
+		for(int i = 0; i <100; i++) {
+			//when we catch an exception we have ran out of racks, and thus coin types
+			try {
+			vm.getCoinKindForCoinRack(i);
+			
+			}catch(Exception e)
+			{
+				break;
+			}
+			coinTypes++;
+			
+		}
+		//We use coinTypes to build an array of each coin kind
+		int[] coinKinds = new int[coinTypes];
+		for(int i = 0; i<coinTypes; i++)
+		{
+			coinKinds[i] = vm.getCoinKindForCoinRack(i);
+		}
+		if (debug)
+		{
+			for(int i = 0; i<coinKinds.length; i++) {
+			System.out.println(coinKinds[i]);	
+			}
+		}
+		return coinKinds;
 	}
 	
 	/**
@@ -258,7 +299,7 @@ public class VendingLogic implements VendingLogicInterface {
 	public void determineButtonAction(PushButton button) {
 		boolean found = false;
 		
-		if (vm.isSafetyEnabled() == false) {
+		if(vm.isSafetyEnabled() == false) {
 			// search through the selection buttons to see if the parameter button is a selection button
 			for (int index = 0; (found == false) && (index < vm.getNumberOfSelectionButtons()); index++) {
 				if (vm.getSelectionButton(index) == button) {
@@ -385,7 +426,7 @@ public class VendingLogic implements VendingLogicInterface {
 		else {
 			vm.getOutOfOrderLight().activate();
 			returnChange();
-			vm.enableSafety();
+			//vm.enableSafety(); NOTE: calling enableSafety() will result in a stack overflow exception
 		}
 	}
 	
@@ -409,7 +450,8 @@ public class VendingLogic implements VendingLogicInterface {
 		}
 		else {
 			vm.getOutOfOrderLight().deactivate();
-			vm.disableSafety();
+			//vm.disableSafety(); NOTE: This may result in a stack overflow exception
+			
 		}
 	}
 	
