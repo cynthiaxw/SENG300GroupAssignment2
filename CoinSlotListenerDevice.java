@@ -30,7 +30,7 @@ public class CoinSlotListenerDevice implements CoinSlotListener {
 	}
 	
 	/**
-	* Method disables a specific peice of hardware
+	* Method enables a specific peice of hardware
 	* @param AbstractHardware<? extends AbstractHardwareListener> hardware, the piece of hardware to enable
 	*/
 	@Override
