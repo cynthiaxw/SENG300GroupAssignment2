@@ -444,9 +444,10 @@ public class VendingLogic implements VendingLogicInterface {
 			}
 		}
 		else {
-			vm.getOutOfOrderLight().activate();
-			returnChange();
-			//vm.enableSafety(); NOTE: calling enableSafety() will result in a stack overflow exception
+			if (vm.isSafetyEnabled()) {
+				returnChange();
+				vm.enableSafety();
+			}
 		}
 	}
 	
@@ -469,8 +470,8 @@ public class VendingLogic implements VendingLogicInterface {
 			}
 		}
 		else {
-			vm.getOutOfOrderLight().deactivate();
-			//vm.disableSafety(); NOTE: This may result in a stack overflow exception
+			if (vm.isSafetyEnabled())
+				vm.disableSafety();
 			
 		}
 	}
