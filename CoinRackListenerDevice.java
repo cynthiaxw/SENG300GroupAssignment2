@@ -29,9 +29,8 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	
 	
 	/**
-	* Method enables a specific piece of hardware. 
-	* @param
-	* @return 
+	* Method disables a specific peice of hardware
+	* @param AbstractHardware<? extends AbstractHardwareListener> hardware, the piece of hardware to enable
 	*/
 	@Override
 	public void enabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
@@ -40,9 +39,8 @@ public class CoinRackListenerDevice implements CoinRackListener{
 	}
 
 	/**
-	* Method disables a piece of hardware
-	* @param
-	* @return 
+	* Method disables a specific peice of hardware
+	* @param AbstractHardware<? extends AbstractHardwareListener> hardware, the piece of hardware to disable
 	*/
 	@Override
 	public void disabled(AbstractHardware<? extends AbstractHardwareListener> hardware) {
