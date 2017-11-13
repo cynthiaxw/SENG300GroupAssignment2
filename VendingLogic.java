@@ -50,7 +50,7 @@ public class VendingLogic implements VendingLogicInterface {
 	* @param none
 	* @return String currentMessage
 	*/
-	public String getCrurrentMessage(){
+	public String getCurrentMessage(){
 		return currentMessage;
 	}
 	
