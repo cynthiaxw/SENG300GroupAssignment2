@@ -97,6 +97,10 @@ public class VendingLogic implements VendingLogicInterface {
 		{
 			if (debug)System.out.println("Invalid config setup");
 		}
+		//For each pop rack create and register a listener
+		for (int i = 0; i < vm.getNumberOfPopCanRacks(); i++) {
+			vm.getPopCanRack(i).register(new PopCanRackListenerDevice(this));
+		}
 	}
 	
 	/**
