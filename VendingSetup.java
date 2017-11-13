@@ -25,7 +25,16 @@ public class VendingSetup {
 	private ArrayList<String> popNames;
 	private ArrayList<Integer> popCosts;
 	
-	
+	/**
+	* Constructor creates the object, and sets the following as default values:
+	*		ButtonCount = 6;
+	*		coinRackCapacity = 100;
+	*		popCanRackCapacity = 10;
+	*		receptacleCapacity = 200;
+	*		deliveryChuteCapacity = 1;
+	*		coinReturnCapacity = 50; 
+	*
+	*/
 	public VendingSetup() {
 			
 	//arbitrary values right now
@@ -56,6 +65,11 @@ public class VendingSetup {
 		myVM.loadPopCans(capacEachRack);
 	}
 	
+	
+	/**
+	* getter for the setup vending machine
+	* @return Vending vm, the vending machine created.
+	*/
 	public VendingMachine getVendingMachine() {
 		return myVM;
 	}			
