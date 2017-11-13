@@ -20,9 +20,9 @@ public class CoinReceptacleListenerDevice implements CoinReceptacleListener{
 	
 	
 	/**
-	*
-	* Constructor creates the listener, and assigns a logic interface to interact with
-	* @param
+	* Constructor creates the listener and assigns a logic to it
+	* @param VendingLogicInterface Logic that the listener interacts with
+	* 
 	*/
 	public CoinReceptacleListenerDevice(VendingLogicInterface logic)
 	{
