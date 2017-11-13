@@ -10,8 +10,8 @@ public class EventLog implements EventLogInterface {
 	
 	
 	private PrintWriter writer;
-	private int lineCount = 0;
-	private int iteration = 0;
+//	private int lineCount = 0;		for next iteration
+//	private int iteration = 0;
 		
 	/**
 	* Constructor creates an event log file and writes base contents. 
@@ -36,8 +36,9 @@ public class EventLog implements EventLogInterface {
 	*/
 	public void writeToLog(String s){
 	/*
-	 * If the EventLog reaches 500 lines log make a new EventLog
-	 */
+	 ***** FOR NEXT ITERATION *****
+	 If the EventLog reaches 500 lines log make a new EventLog
+	 
 		if(lineCount >= 500) {
 			iteration++;
 			String it = Integer.toString(iteration);	//converts iteration to string to add to filename
@@ -48,11 +49,12 @@ public class EventLog implements EventLogInterface {
 				e.printStackTrace();
 			}
 			lineCount = 1;
-		}		
+		}
+		*/
 		
 		timeStamp();
 		writer.println(s + "\n");
-		lineCount++;
+		//lineCount++;
 	}
 	
 	/**
