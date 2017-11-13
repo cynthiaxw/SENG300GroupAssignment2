@@ -1,93 +1,94 @@
 package ca.ucalgary.seng300.a2.test;
-
 import static org.junit.Assert.*;
 
 import org.junit.Test;
 import org.lsmr.vending.*;
 import org.lsmr.vending.hardware.*;
 
-import ca.ucalgary.seng300.a2.CoinReceptacleListenerDevice;
+import ca.ucalgary.seng300.a2.CoinSlotListenerDevice;
 import ca.ucalgary.seng300.a2.EventLogInterface;
 import ca.ucalgary.seng300.a2.VendingLogicInterface;
 
 
-
-
 /**
- * 38% code coverage right now
+ * 100% coverage, although
  *
  */
-public class TestCoinReceptacleListenerDevice {
-
+public class TestCoinSlotListener {
+	
 	/**
-	* Tests to that logic is enabled when asked to be
-	*/
+	 * Tests to that logic is enabled when asked to be
+	 */
 	@Test
 	public void isEnabled() {
-		StubLogic logic = new StubLogic(1);
+		int[] coins = {5,10,25,100};
+		StubLogic3 logic = new StubLogic3(coins);
 		logic.hardware.enable();
 		assertTrue(logic.enabled);
 
 	}
+
 	/**
-	* Tests to that logic is disabled when asked to be
-	*/
+	 * Tests to that logic is disabled when asked to be
+	 */
 	@Test
 	public void isDisabled() {
-		StubLogic logic = new StubLogic(1);
+		int[] coins = {5,10,25,100};
+
+		StubLogic3 logic = new StubLogic3(coins);
 		logic.hardware.disable();
 		assertFalse(logic.enabled);
 
 	}
-
-	/**
-	* Tests to that the logic handles valid coins
-	* @throws CapacityExceededException, DisabledException
-	*/
+	
+	
 	@Test
-	public void isAccept() throws CapacityExceededException, DisabledException {
-		StubLogic logic = new StubLogic(2);
-		logic.hardware.acceptCoin(new Coin(5));
-
-		assertEquals(1, logic.dev.coinCount);
-		assertEquals(5, logic.dev.coinValue);
-
+	public void isValidCoin() throws DisabledException {
+		int[] coins = {5,10,25,100};
+		StubLogic3 logic = new StubLogic3(coins);
+		
+		logic.hardware.connect(new CoinChannel(new coinAcceptorStub()) , null);
+		logic.hardware.addCoin(new Coin(10));
+		
+		assertEquals(10,logic.lastCoin);
+		
 	}
-
-	@Test(expected = CapacityExceededException.class)
-	public void isExceeded() throws CapacityExceededException, DisabledException {
-		StubLogic logic = new StubLogic(1);
-		logic.hardware.acceptCoin(new Coin(5));
-		logic.hardware.acceptCoin(new Coin(5));
-
+	
+	@Test
+	public void isInvalidCoin() throws DisabledException {
+		int[] coins = {5,10,25,100};
+		StubLogic3 logic = new StubLogic3(coins);
+		logic.hardware.connect(null , new CoinChannel(new coinAcceptorStub()));
+		logic.hardware.addCoin(new Coin(1));
+		assertTrue(logic.invalid);
+		
 	}
-
-	@Test(expected = DisabledException.class)
-	public void isExceptions() throws CapacityExceededException, DisabledException {
-		StubLogic logic = new StubLogic(1);
-		logic.hardware.disable();
-		logic.hardware.acceptCoin(new Coin(5));
-
-	}
+	
+	
+	
 
 }
 
+
+
 //Stub for testing the 	Vending logic interface
-class StubLogic implements VendingLogicInterface {
+class StubLogic3 implements VendingLogicInterface {
 	
-	public CoinReceptacleListenerDevice dev;
-	public CoinReceptacle hardware;
+	public CoinSlotListenerDevice dev;
+	public CoinSlot hardware;
 	EventStub ev = new EventStub(); 
 
 	public boolean enabled = true;
+	public int lastCoin;
+	public boolean invalid = false;
 
 	/**
 	* Creates a logic stub with a coinreceptacle with num capacity
 	* @param int num, the capacity of the coin receptacle
 	*/
-	public StubLogic(int num) {
-		dev = new CoinReceptacleListenerDevice(this);
-		hardware = new CoinReceptacle(num);
+	public StubLogic3(int[] num) {
+		dev = new CoinSlotListenerDevice(this);
+		hardware = new CoinSlot(num);
 		hardware.register(dev);
 
 	}
@@ -143,12 +144,12 @@ class StubLogic implements VendingLogicInterface {
 
 	@Override
 	public void invalidCoinInserted() {
-
+		invalid = true;
 	}
 
 	@Override
 	public void validCoinInserted(Coin coin) {
-
+		lastCoin = coin.getValue();
 	}
 
 	@Override
@@ -202,4 +203,19 @@ class StubLogic implements VendingLogicInterface {
 		
 	}
 
+}
+
+class coinAcceptorStub implements CoinAcceptor {
+	//	public int coin;
+
+	@Override
+	public void acceptCoin(Coin coin) throws CapacityExceededException, DisabledException {
+	//	this.coin = coin.getValue();
+	}
+
+	@Override
+	public boolean hasSpace() {
+		return true;
+	}
+	
 }

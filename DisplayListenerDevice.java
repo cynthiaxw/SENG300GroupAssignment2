@@ -1,4 +1,4 @@
-package groupAssignment2;
+package ca.ucalgary.seng300.a2;
 import org.lsmr.vending.hardware.AbstractHardware;
 import org.lsmr.vending.hardware.AbstractHardwareListener;
 import org.lsmr.vending.hardware.Display;
@@ -6,14 +6,14 @@ import org.lsmr.vending.hardware.DisplayListener;
 
 public class DisplayListenerDevice implements DisplayListener {
 	
-	private VendingLogic logic;
+	private VendingLogicInterface logic;
 	
 	/**
 	* Constructor creates the listener and assigns a logic to it
 	* @param LogicInterface Logic that the listener interacts with
 	* 
 	*/
-	public DisplayListenerDevice(VendingLogic logic) {
+	public DisplayListenerDevice(VendingLogicInterface logic) {
 		this.logic = logic;
 	}
 	

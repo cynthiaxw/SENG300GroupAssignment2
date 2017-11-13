@@ -6,5 +6,4 @@ public interface EventLogInterface {
 
 	public void writeToLog(String s);
 	
-	public void timeStamp();
 }

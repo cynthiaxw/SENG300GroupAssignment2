@@ -1,4 +1,4 @@
-package groupAssignment2;
+package ca.ucalgary.seng300.a2;
 
 import org.lsmr.vending.*;
 import org.lsmr.vending.hardware.*;
