@@ -6,14 +6,14 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
+
 public class VendingLogic implements VendingLogicInterface {
 	private VendingMachine vm;				// The vending machine that this logic program is installed on
 	private int credit;					// credit is saved in terms of cents 
 	private EventLogInterface EL;				// An even logger used to track vending machine interactions
 	private Boolean[] circuitEnabled;			// an array used for custom configurations
-	private String currentMessage;				//the current contents of the display
 	private boolean debug = true;
-
+	private String currentMessage ="";	
 	/**
 	*This constructor uses a vending machine as a paramter, then creates and assigns listeners to it.
 	*
@@ -34,6 +34,7 @@ public class VendingLogic implements VendingLogicInterface {
 		for (int i = 0; i < circuitEnabled.length; i++) {
 			circuitEnabled[i] = false;
 		}
+		
 	}
 	
 	/**
@@ -43,24 +44,6 @@ public class VendingLogic implements VendingLogicInterface {
 	*/
 	public EventLogInterface getEventLog(){
 		return EL;
-	}
-	
-	/**
-	* this method returns the current contents of the display
-	* @param none
-	* @return String currentMessage
-	*/
-	public String getCurrentMessage(){
-		return currentMessage;
-	}
-	
-	/**
-	* this method sets the contents of the display, called by displayListenerDevice
-	* @param String x is the new message
-	* @return void
-	*/
-	public void setCurrentMessage(String x){
-		currentMessage = x;	
 	}
 	
 	/**
@@ -96,7 +79,7 @@ public class VendingLogic implements VendingLogicInterface {
 		catch(Exception e)
 		{
 			//This will print out the null pointer error
-			System.out.println("Coin return not instantiated! " + e);
+			if (debug) System.out.println("Coin return not instantiated! " + e);
 		}
 		
 		//For each button create and register a listener
@@ -112,7 +95,7 @@ public class VendingLogic implements VendingLogicInterface {
 		vm.getConfigurationPanel().getEnterButton().register(new PushButtonListenerDevice(this));
 		}catch(Exception e)
 		{
-			System.out.println("Invalid config setup");
+			if (debug)System.out.println("Invalid config setup");
 		}
 	}
 	
@@ -169,7 +152,7 @@ public class VendingLogic implements VendingLogicInterface {
 	public void invalidCoinInserted() {
 		vm.getDisplay().display("Invalid coin!");
 		try {
-			Thread.sleep(5000);			// wait for 5 seconds
+			if(!debug) Thread.sleep(5000);			// wait for 5 seconds
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -198,6 +181,24 @@ public class VendingLogic implements VendingLogicInterface {
 	 */
 	public void dispensingMessage() {
 		vm.getDisplay().display("Despensing. Enjoy!");
+	}
+	
+	/**
+	* this method returns the current contents of the display
+	* @param none
+	* @return String currentMessage
+	*/
+	public String getCurrentMessage(){
+		return currentMessage;
+	}
+	
+	/**
+	* this method sets the contents of the display, called by displayListenerDevice
+	* @param String x is the new message
+	* @return void
+	*/
+	public void setCurrentMessage(String x){
+		currentMessage = x;	
 	}
 	
 	/**
@@ -394,7 +395,6 @@ public class VendingLogic implements VendingLogicInterface {
 	 * @return The index of the hardware according to the vending machine. -1 means error could not find
 	 */
 	public int findHardwareIndex(AbstractHardware<? extends AbstractHardwareListener> hardware) {
-		
 		if (hardware instanceof PopCanRack) {
 			for (int index = 0; index < vm.getNumberOfPopCanRacks(); index++) {
 				if (vm.getPopCanRack(index) == hardware) {
@@ -444,10 +444,9 @@ public class VendingLogic implements VendingLogicInterface {
 			}
 		}
 		else {
-			if (!vm.isSafetyEnabled()) {
-				returnChange();
-				vm.enableSafety();
-			}
+			vm.getOutOfOrderLight().activate();
+			returnChange();
+			//vm.enableSafety(); NOTE: calling enableSafety() will result in a stack overflow exception
 		}
 	}
 	
@@ -470,10 +469,11 @@ public class VendingLogic implements VendingLogicInterface {
 			}
 		}
 		else {
-			if (vm.isSafetyEnabled())
-				vm.disableSafety();
+			vm.getOutOfOrderLight().deactivate();
+			//vm.disableSafety(); NOTE: This may result in a stack overflow exception
 			
 		}
 	}
 	
 }
+
