@@ -38,7 +38,7 @@ public class VendingLogic implements VendingLogicInterface {
 		for (int i = 0; i < circuitEnabled.length; i++) {
 			circuitEnabled[i] =true; //we enable all by default
 		}
-		this.welcomeMessage();
+		this.welcomeMessageScheduler();
 	}
 	
 	/**
@@ -131,7 +131,7 @@ public class VendingLogic implements VendingLogicInterface {
 		}
 		public void run() {
 			vend.getDisplay().display("Welcome!");
-			thingToRun = scheduledExecutor.schedule(new Runnable() {clearDisplayMessage(this.vend, this.thing2Run, ScheduledExecutorService this.scheduledExecutor)}, 5, TimeUnit.SECONDS);
+			thingToRun = this.scheduledExecutor.schedule(new Runnable() {clearDisplayMessage(this.vend, this.thing2Run, ScheduledExecutorService this.scheduledExecutor)}, 5, TimeUnit.SECONDS);
 		}
 	}
 	
@@ -151,7 +151,7 @@ public class VendingLogic implements VendingLogicInterface {
 		}
 		public void run() {
 			vend.getDisplay().display("");
-			thingToRun = scheduledExecutor.schedule(new Runnable() {welcomeMessage(this.vend, this.thing2Run, ScheduledExecutorService this.scheduledExecutor)}, 10, TimeUnit.SECONDS);
+			thingToRun = this.scheduledExecutor.schedule(new Runnable() {welcomeMessage(this.vend, this.thing2Run, ScheduledExecutorService this.scheduledExecutor)}, 10, TimeUnit.SECONDS);
 		}
 	}
 	
