@@ -7,12 +7,13 @@ import java.util.TimerTask;
 
 
 
+
 public class VendingLogic implements VendingLogicInterface {
 	private VendingMachine vm;				// The vending machine that this logic program is installed on
 	private int credit;					// credit is saved in terms of cents 
 	private EventLogInterface EL;				// An even logger used to track vending machine interactions
 	private Boolean[] circuitEnabled;			// an array used for custom configurations
-	private boolean debug = false;				//Print debug messages or not
+	private boolean debug = false;
 	private String currentMessage ="";	
 	/**
 	*This constructor uses a vending machine as a paramter, then creates and assigns listeners to it.
@@ -32,9 +33,9 @@ public class VendingLogic implements VendingLogicInterface {
 		//Set up the custom configuration
 		circuitEnabled = new Boolean[vm.getNumberOfSelectionButtons()];
 		for (int i = 0; i < circuitEnabled.length; i++) {
-			circuitEnabled[i] = false;
+			circuitEnabled[i] =true; //we enable all by default
 		}
-		
+		vm.getDisplay().display("Welcome!");
 	}
 	
 	/**
@@ -122,7 +123,7 @@ public class VendingLogic implements VendingLogicInterface {
 	 * A method to push a welcome message to the display
 	 */
 	public void welcomeMessage() {
-		vm.getDisplay().display("Welcome");
+		vm.getDisplay().display("Welcome!");
 	}
 	
 	/**
@@ -130,7 +131,7 @@ public class VendingLogic implements VendingLogicInterface {
 	 */
 	public void vendOutOfOrder() {
 		//vm.enableSafety(); NOTE: Due to a current bug in the Vending Machine, this results in a stack overflow error
-		vm.getDisplay().display("OutOfOrder");
+		vm.getDisplay().display("Out Of Order");
 	}
 	
 	/**
@@ -244,6 +245,7 @@ public class VendingLogic implements VendingLogicInterface {
 	
 	/**
 	 * Method finds out what coin kinds are used in the vending machine based on the number of coin racks.
+	 * This cannot be called while coinReturn is bugged
 	 * @return int[] coinKinds, for example {5, 10, 25, 100, 200} for canadaian currency
 	 */
 	public int[] getVmCoinKinds()
@@ -449,7 +451,9 @@ public class VendingLogic implements VendingLogicInterface {
 		}
 		else {
 			vm.getOutOfOrderLight().activate();
+			
 			returnChange();
+			vendOutOfOrder();
 			//vm.enableSafety(); NOTE: calling enableSafety() will result in a stack overflow exception
 		}
 	}
@@ -477,6 +481,21 @@ public class VendingLogic implements VendingLogicInterface {
 			//vm.disableSafety(); NOTE: This may result in a stack overflow exception
 			
 		}
+	}
+	
+	/**
+	 * Method returns the value in the circuitEnabled array at an index
+	 * @param int index, the index of the desired value
+	 * @return boolean circuitEnabled[index]
+	 */
+	public boolean getCircuitEnabledIndex(int index)
+	{
+		if (index<0 || index >= circuitEnabled.length)
+		{
+			throw new IndexOutOfBoundsException();
+		}
+		else
+			return circuitEnabled[index];
 	}
 	
 }
