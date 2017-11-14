@@ -4,8 +4,9 @@ import org.lsmr.vending.*;
 import org.lsmr.vending.hardware.*;
 import java.util.Timer;
 import java.util.TimerTask;
-
-
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 
 public class VendingLogic implements VendingLogicInterface {
@@ -14,7 +15,9 @@ public class VendingLogic implements VendingLogicInterface {
 	private EventLogInterface EL;				// An even logger used to track vending machine interactions
 	private Boolean[] circuitEnabled;			// an array used for custom configurations
 	private boolean debug = false;
-	private String currentMessage ="";	
+	private String currentMessage ="";
+	public final ScheduledExecutorService scheduledExecutor = Executors.newScheduledThreadPool(2);
+	private ScheduledFuture<?> thingToRun;
 	/**
 	*This constructor uses a vending machine as a paramter, then creates and assigns listeners to it.
 	*
@@ -35,7 +38,7 @@ public class VendingLogic implements VendingLogicInterface {
 		for (int i = 0; i < circuitEnabled.length; i++) {
 			circuitEnabled[i] =true; //we enable all by default
 		}
-		vm.getDisplay().display("Welcome!");
+		this.welcomeMessageScheduler();
 	}
 	
 	/**
@@ -105,32 +108,58 @@ public class VendingLogic implements VendingLogicInterface {
 	}
 	
 	/**
-	* Method for displaying a message for 5 seconds and erase it for 10s, if credit in VM is zero.
-	* @param None
-	* @return None
+	* Method for scheduling the display of a message for 5 seconds and erase it for 10s
 	*/
-	public void welcomeMessageTimer(){
-		TimerTask task = new MyTimer(vm);
-		Timer timer = new Timer();
+	public void welcomeMessageScheduler(){
+		thingToRun = scheduledExecutor.schedule(new Runnable() {clearDisplayMessage(this.vend, this.thing2Run, ScheduledExecutorService this.scheduledExecutor)}, 0, TimeUnit.SECONDS);
+		}
+
+	
+	/**
+	 * A runnable class to push a welcome message to the display
+	 *  used with the scheduledExecutor
+	 */
+	private class welcomeMessage implements Runnable {
+		private VendingMachine vend;
+		private ScheduledFuture<?> thing2Run;
+		private ScheduledExecutorService scheduledExecutor;
 		
-		//Default message timer
-		while (credit == 0){
-			timer.schedule(task, 10000, 5000);
+		public clearDisplayMessage(VendingMachine vm, ScheduledFuture<?> thingToRun, ScheduledExecutorService schedExecu) {
+			this.vend = vm;
+			this.thing2Run = thingToRun;
+			this.scheduledExecutor = schedExecu;
+		}
+		public void run() {
+			vend.getDisplay().display("Welcome!");
+			thingToRun = this.scheduledExecutor.schedule(new Runnable() {clearDisplayMessage(this.vend, this.thing2Run, ScheduledExecutorService this.scheduledExecutor)}, 5, TimeUnit.SECONDS);
 		}
 	}
-
+	
 	/**
-	 * A method to push a welcome message to the display
+	 * A runnable class to clear the message to the display
+	 *  used with the scheduledExecutor
 	 */
-	public void welcomeMessage() {
-		vm.getDisplay().display("Welcome!");
+	private class clearDisplayMessage implements Runnable {
+		private VendingMachine vend;
+		private ScheduledFuture<?> thing2Run;
+		private ScheduledExecutorService scheduledExecutor;
+		
+		public clearDisplayMessage(VendingMachine vm, ScheduledFuture<?> thingToRun, ScheduledExecutorService schedExecu) {
+			this.vend = vm;
+			this.thing2Run = thingToRun;
+			this.scheduledExecutor = schedExecu;
+		}
+		public void run() {
+			vend.getDisplay().display("");
+			thingToRun = this.scheduledExecutor.schedule(new Runnable() {welcomeMessage(this.vend, this.thing2Run, ScheduledExecutorService this.scheduledExecutor)}, 10, TimeUnit.SECONDS);
+		}
 	}
 	
 	/**
 	 * A method to send an OutOfOrder message to the display
 	 */
 	public void vendOutOfOrder() {
-		//vm.enableSafety(); NOTE: Due to a current bug in the Vending Machine, this results in a stack overflow error
+		schedule.cancel();
 		vm.getDisplay().display("Out Of Order");
 	}
 	
@@ -138,6 +167,7 @@ public class VendingLogic implements VendingLogicInterface {
 	 * A method to push the currently accumulated credit to the display
 	 */
 	public void displayCredit() {
+		schedule.cancel();
 		vm.getDisplay().display("Current Credit: $" + (((double) credit)/100));
 	}
 	
@@ -146,8 +176,17 @@ public class VendingLogic implements VendingLogicInterface {
 	 * @param index - the selection number that corresponds to the desired pop
 	 */
 	public void displayPrice(int index) {
+		schedule.cancel();
 		vm.getDisplay().display("Price of " + vm.getPopKindName(index) + ": $" + (((double) vm.getPopKindCost(index)) / 100));
-		this.displayCredit();
+		try {
+			if(!debug) Thread.sleep(5000);			// wait for 5 seconds
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		if (credit == 0)
+			welcomeMessageScheduler();
+		else
+			this.displayCredit();
 	}
 	
 	/**
@@ -155,13 +194,17 @@ public class VendingLogic implements VendingLogicInterface {
 	 * TODO is this an acceptible way to wait for 5 seconds?
 	 */
 	public void invalidCoinInserted() {
+		schedule.cancel();
 		vm.getDisplay().display("Invalid coin!");
 		try {
 			if(!debug) Thread.sleep(5000);			// wait for 5 seconds
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		this.displayCredit();
+		if (credit == 0)
+			welcomeMessageScheduler();
+		else
+			this.displayCredit();
 	}
 	
 	/**
@@ -171,7 +214,7 @@ public class VendingLogic implements VendingLogicInterface {
 	 */
 	public void validCoinInserted(Coin coin) {
 		credit += coin.getValue();
-		
+		schedule.cancel();
 		//Light the exact change light based on attempted change output
 		if (!isExactChangePossible())
 			vm.getExactChangeLight().activate();
@@ -370,7 +413,7 @@ public class VendingLogic implements VendingLogicInterface {
 				credit -= vm.getPopKindCost(index);		// deduct the price of the pop
 				returnChange();
 				if (credit == 0)
-					this.welcomeMessage();
+					this.welcomeMessageScheduler();		// begin cycling the welcome message again
 				else
 					this.displayCredit();
 			} catch (DisabledException e) {
