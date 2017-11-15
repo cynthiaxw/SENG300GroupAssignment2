@@ -1,0 +1,769 @@
+commit ea25a19d155ce6d612f45665377a4303a4a1e945
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Add files via upload
+
+commit 334debb5336d8de3b02933ac465a4d37b22693f2
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Contains the new Hardware, latest files
+
+commit 31777994c0d1560edd29baf5df0afe196c8d40e1
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Note! This is too out of date to submit.
+
+commit a5ee116a211e5556b095a285282d7143ce03335c
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Changed some exceptions to generic
+
+commit b2655203b0709d17ef95bda95e4fc55492fea18b
+Merge: e57a53f d1b47f8
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Merge pull request #20 from cynthiaxw/ttdjohns-patch-2
+
+commit e57a53f4d99d457e3e33105d8fd89a781c03f6c5
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    PopCanRackListenerDevice test, only 30%
+
+commit 7a23e50c0b54c0648b6a713c3b87d7b48c4d632a
+Merge: cbbafa5 cbf27e4
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    Merge pull request #21 from cynthiaxw/testspatch
+
+commit cbf27e40af08f77a5713be0582599f3ff45ee163
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    Added IndicatorLightListenerDevice Test
+
+commit cbbafa5bae0561266c8c6261878e4fa77122bf54
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Add files via upload
+
+commit a1c4b88e3727a60870483d3cd5d666687c438e39
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Delete Diagrams.pdf
+
+commit d1b47f8bff58878a4ebb1f40e10c4f88bb8f84ed
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Added timers for welcome message
+
+commit 0a8e3f1bef41a92b74709e5c8678b0a921fe8a73
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Delete Requirements.docx
+
+commit 8c16c9c2ed38041db26c747d3b96515845c8f7cb
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Add files via upload
+
+commit 0def3355d359d06a56f61f2a510eee309f72a316
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Delete SequenceDiagram2.jpg
+
+commit 5897cf37b73a879d41fec123777801b1fa24d4b2
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Delete SequenceDiagram1.jpg
+
+commit 39f5ee7076840f6d414b4c6643cfa2dde51f90ea
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Add files via upload
+
+commit 9e9693c6719bee019c5f67dacedd43064a9072b5
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Delete Diagrams.pdf
+
+commit 74d2938fd904c02e637539a1446e668988ec7ffe
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Delete GA2_JUSTIFICATION.docx
+
+commit a3e1a203df8ad439fe030b45653e46696d7284c5
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Add files via upload
+
+commit 929020b5560076adef369090b2165ebb5f84c469
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Delete diagram1.pdf
+
+commit 3112235c148d4032e67b3f28caa2d4451300389c
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Delete diagrams.pdf
+
+commit 8fb0a623ac66a0c8b6b56bc35c6f8ccb235d2f2a
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Add files via upload
+
+commit 3b0ff2c2d320f2f79a0bfc7ec0a1cff2ef79ad40
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Rename TestVendingLogic to TestVendingLogic.java
+
+commit ff83d70ed367d9bcf6f7fa11a94bffb198d1aac6
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Rename TestVendingLogic_Installed to TestVendingLogic_Installed.java
+
+commit ba0a3425e0bc49fa94cb8b55eb34532db425e804
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Add files via upload
+
+commit 9d75da97d56c1c572ef4510a6fbf42b60fda5ae9
+Author: cynthiaxw <365683780@qq.com>
+
+    Add files via upload
+
+commit fac21bcf98039ff16959a336a1c098fb5123b956
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added the updated workspace
+
+commit 6561463ca73e305ea28aa261031288355536d558
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Test Cases for the entire system.
+
+commit 96379b6a97781cb80ca164c092d2b3a645800990
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Moved tests cases to new class. Bugfixes
+
+commit 10c17880baeac0963c8c2744af0e716d80aa33f7
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added a new getCircuitEnabledIndex method
+
+commit 9ce45b501893cdaa9ba283e13bc7ff14710c6d1e
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Add files via upload
+
+commit 434e4de934f2a54706edbe2aa0057bce6be15964
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit 8443754c1bf9add51f43357bac4ef86142e57d76
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Add files via upload
+
+commit 3433046621531773fd80e94bba60b92356e61f04
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    disabled debug messages
+
+commit 572c5e2937792049739bb9d6d8fdfb76e568c4ee
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added more test cases
+
+commit fd48678dec7787815c40a46505cbfa90c1e503a1
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Bug fixes, added some debug messages
+
+commit aff950d833c30fc3eb6b777a78abbac960727150
+Merge: 2e02970 67c4ead
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    Merge pull request #18 from cynthiaxw/tests
+
+commit 67c4ead0faf27bb77642c03243ca17067233fa19
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    Add files via upload
+
+commit 2e029701194314274c66a395e179596a56afcab7
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Update EventLog.java
+
+commit 7dc5ce569de8f2111c5178ef49b77cb98606e078
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Add files via upload
+
+commit 4dd08978e3dfbe95da1490adf8809eb3ccfce099
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Add files via upload
+
+commit cec2b1f7fd4256a643feffa5f88f28757b4a935f
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Add files via upload
+
+commit 3ba23d4a790e2bd1d39df6c5b64cc967e206d06c
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Add files via upload
+
+commit c80b3d2f14d7803c65555a217f5d23bce2ffa729
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Update VendingLogic.java
+
+commit a7ab82834a38b389453da56fa116c9cef88eb6a7
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Created Core JUNIT class for VendingLogic
+
+commit 11fab7babcf02e0c547e796881f8900c2677bf03
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit b117d6e150dbd0a1f431cdefd78d748b1c6ea2ac
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit b02dd29450f7a0ba7e88539e2a3610bd7ca0f1a2
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Packaged Files, Eclipse Workspace
+
+commit aa095cb506ab91fc16fb5f35d65fc4fdde435836
+Merge: f39e914 d5e0cba
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Merge pull request #17 from cynthiaxw/Chandler-branch
+
+commit d5e0cbab47251b1732e5adbd4583c80cf96a945b
+Merge: 5a145c7 f39e914
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Merge branch 'master' into Chandler-branch
+
+commit 5a145c7ac934f3d8a046da03b59712b16b404d11
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Update VendingLogic.java
+
+commit d8b2df0a8b8f8cbe767ecf1916c9ac394355784c
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Update DisplayListenerDevice.java
+
+commit 63b41d701eee983a21fd765f622d1578e2e51284
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Update EventLog.java
+
+commit f39e914155d60a2a4f3b8ac1d4abff9b4bb6812e
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Bug Fixes, and exception Handling
+
+commit 0865020899b2f33fd69234cce22676a2b5b19190
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Update VendingLogic.java
+
+commit 3860a9e5c19950802de01cad0373429abc02125b
+Merge: b73ee4b 54c9d8b
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Merge pull request #6 from cynthiaxw/cynthiaxw-patch-2
+
+commit 142db0f7cc28cc9c64a8424ceb33b6fec93c5bf0
+Merge: ba5f1ae b73ee4b
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Merge pull request #16 from cynthiaxw/master
+
+commit b73ee4bb5e62be7e40323e8e6019deea08cbe9ae
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added Javadoc
+
+commit 9978caad9a4958d97f1700460960db82a7bf2171
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added partial Javadoc
+
+commit a90dda89819eb1f79ae3983c7274674d06b50903
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    corrected small typo on line 198
+
+commit 073f60a7d82bff7062dfbaee3fa79856886de8d8
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Partial Javadoc added
+
+commit 375883d474c740744b831d2674b2e14899bbabfa
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Corrected some javadoc
+
+commit 48189699f7cb93c6e8034444619bfb03c3b09e8f
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Corrected some javadoc
+
+commit 577951ff029810a2893facca94985a9bd844ce05
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Corrected some javadoc
+
+commit 3e37dc6a6c4c735f4f82cd69c48d99c11e08783a
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Corrected Enabled Javadoc
+
+commit 6a5acbf80bef732204466c6d7caa560292564cd4
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Corrected Javadoc
+
+commit d118b964180f4e05b49716c401cc834a6b42878f
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added Javadoc
+
+commit 16f754bd0efced9d28d697705d2b8139b6d9860d
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added Partial Javadoc
+
+commit c7bbdc14199fa6ed40f17afbe2b4e5a5d861ae4b
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added Javadoc
+
+commit f13f278469e442f321d69fb35fb3cfd68afe9f12
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added Javadoc
+
+commit d776ff020a529592665cedae549e6185841fe5ab
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added Javadoc
+
+commit d70f349b7112bd62bbc710fcca934336167a746c
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added Javadoc
+
+commit d23bfebffbc8391510459cf3f8d70ae0d829706b
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added Javadoc documentation
+
+commit 01006038a390e6fc37150dc15258a85b23274356
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Improved Documentation
+
+commit 1cf61beacf10e08025f85e993c05e67009eb465f
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added further documentation
+
+commit cdd3f3925f459398208327d1694d7d872c1e2e9b
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Update CoinReceptacleListenerDevice.java
+
+commit b4522c37b3de71b5fd025269d950f8ed3c7062aa
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Update CoinRackListenerDevice.java
+
+commit 444a05f41a88f354063afd5ab42ec4331f1cbc45
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Further Javadoc and documentation
+
+commit ead0021dfb8a1e154339b4b28865846f99738376
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Further javadoc and documentation
+
+commit 0934ed4d88f1f66d014e63c0f44a7fb56d24572e
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added more javadoc comments and documentation
+
+commit f060b16b56b2b48e3447ba0c13185ea9a9c99c4f
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit 9158e971849b46fce9ec4871adc1dcd5656f3195
+Merge: d6164ae 87f5ff6
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Merge pull request #15 from cynthiaxw/Trent's-Branch
+
+commit 87f5ff6417e01ec7a8bccd4de09e0af897f1989b
+Merge: d6164ae 6dfbd2c
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Merge pull request #14 from cynthiaxw/Trent's-sub-branch
+
+commit 6dfbd2cbee21e9f1e79e666a473262c2c195bc40
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit e1bdb174f7185296417c9c0b41e7feb0d2dd27aa
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit d6164ae9d9c34f15613f4fd7b1b67d8a6be10a8c
+Merge: be8edf8 ba5f1ae
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Merge pull request #12 from cynthiaxw/Chandler-branch
+
+commit be8edf88273c6778f38db2f7ed92b85dbfa64d6d
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Update VendingLogic.java
+
+commit aa7c18b74c235df8cfef64a1529926872063edaa
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Add files via upload
+
+commit a5ff137f1e9b7f59b207db1cca38fecf9ac4b7ff
+Merge: 4ca8d57 ffa4311
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Merge pull request #10 from cynthiaxw/testsPatch
+
+commit ba5f1ae900d1192ab4578aae3227caf40e1451fe
+Merge: 5ef3b70 4ca8d57
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Merge pull request #11 from cynthiaxw/master
+
+commit ffa4311c4e034594f255f7e6282b7ec1ea07bab6
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    Update IndicatorLightListenerDevice.java
+
+commit 4a53f10549781e75a6b6a43941d146605e822c9f
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    Update PopCanRackListenerDevice.java
+
+commit 7a9b4c9866d75fe3229f2f6c9c0cf8439233d483
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    Update PushButtonListenerDevice.java
+
+commit 28c6ffef193fbad08876fbdb66b2702c533f2721
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    Update CoinSlotListenerDevice.java
+
+commit c843f4060db7d63d31ab82d73f81f807474cd546
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    updated to depend on vendingLogic Interface
+
+commit 84a12a3d34f42fa5cf915822a8a06bf9d92b0759
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    Test return
+
+commit cd7e3dcd6425b8d07952a4fcc51850d6f01ebe53
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    Changed These files
+
+commit dc9575a2f48d1850c730d1e680499ec1bf9aa807
+Author: b-rao <32683633+b-rao@users.noreply.github.com>
+
+    CoinReceptacle Listener Tests, files for ease
+
+commit 4ca8d5794b232832f73f34810a1d48e5934f9e34
+Author: cynthiaxw <365683780@qq.com>
+
+    Update IndicatorLightListenerDevice.java
+
+commit e393b280815a748eb941252f6d12dc0aa84d33fa
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinSlotListenerDevice.java
+
+commit f9676e8e3b8742a7086ca5b309f7eeecd4933b00
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinReceptacleListenerDevice.java
+
+commit 558e805a2ed48bcc2e5a5681d6d6b87b1d61ab4b
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinReturnListenerDevice.java
+
+commit 4d63169d7926b14abdce70475b6a636dc5b4e20c
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinRackListenerDevice.java
+
+commit 5b33bd3084a482ae96dbf281d993c4d6d2a79c15
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinReceptacleListenerDevice.java
+
+commit cc4f05e9c696840ba4e54c9295c056dffddd2ea2
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit ad5d311795ca1b310bf3150373d470b893097997
+Merge: 70dafd0 ba71f32
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Merge pull request #9 from cynthiaxw/Trent-branch-2
+
+commit ba71f322f3ced45c9f4742fec66242d150c5c644
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit 248528751f3657e8b361ca6741abeff4a13fcec0
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    New VendingLogic
+
+commit 70dafd02083a68ee4a93a453a04c88a1a6efea4e
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update PushButtonListenerDevice.java
+
+commit f1ab38e8594d50a8c4b8e40ea6e00dd2ef274552
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Delete Logic.java
+
+commit eb4832afc79122780a91161e483523fb87b0e38d
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit 6d7af944f0b2d3578d6dfd9d0630ccc761807a3a
+Merge: f5247a6 5ef3b70
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Merge pull request #8 from cynthiaxw/Chandler-branch
+
+commit f5247a608eba9d053850ae4d2a9721555f771470
+Author: cynthiaxw <365683780@qq.com>
+
+    Add files via upload
+
+commit 5ef3b704ca1fbcb60122e5437824d0d8fb35d736
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Update VendingLogic.java
+
+commit 34b75a810411fa4959116a849924aaa736951c29
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Update EventLog.java
+
+commit d5318fff4429dd330d97f2731993b94ee33a7e16
+Merge: 89f9958 7282d89
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Merge pull request #7 from cynthiaxw/master
+
+commit 7282d894848de21828c10e21d6e08b66a6d3f742
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit db453e619afe1ac3bebd7dc0781538208048640d
+Author: Bigfootmandude <davidjkeizer@gmail.com>
+
+    Added the exception handling for the CoinReturn
+
+commit 3d82c587a4e3a8e312cdb3e820727244f28fb91b
+Merge: 240bfe1 89f9958
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Merge pull request #3 from cynthiaxw/Chandler-branch
+
+commit 240bfe19355dadebf40bfa055aa11c1109628cd8
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Create MyTimer.java
+
+commit ea461c3c9e727338aec65ac081addacf1670d1d8
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Update VendingLogic.java
+
+commit 54c9d8be1325683bf9a1684ac4bcce1a0005a980
+Author: cynthiaxw <365683780@qq.com>
+
+    Add files via upload
+
+commit ec1c4630f6a0855b03006d7a688a359a10e106e0
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinReturnListenerDevice.java
+
+commit 42141bd921a445327854372db15d7a7be244bd7b
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinRackListenerDevice.java
+
+commit c108ce5b6ef94f49f91d79dcab8a09492b1e915c
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinReceptacleListenerDevice.java
+
+commit 2ea2cb88d1e8d7f6e1aa80b39acb675ab5638ba5
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinReturnListenerDevice.java
+
+commit 3a4b674d7639e4632a7eb493853d336715800475
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinRackListenerDevice.java
+
+commit eda58dee1e802a5bb4e68576903dec8b8fa75cf4
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinSlotListenerDevice.java
+
+commit 0b73e69fa056583098f8e25f37ec3d59f0c22790
+Merge: 8162d38 4ed626a
+Author: cynthiaxw <365683780@qq.com>
+
+    Merge pull request #5 from cynthiaxw/cynthiaxw-patch-1
+
+commit 8162d3828fe106abc9a62840775fef56b1f96329
+Author: cynthiaxw <365683780@qq.com>
+
+    Update CoinSlotListenerDevice.java
+
+commit 4ed626a9a2e000b660079243c07ccd4720f4a8b7
+Author: cynthiaxw <365683780@qq.com>
+
+    Update PushButtonListenerDevice.java
+
+commit f87ec269aa4a49a575bafaa696f6d049f4634f43
+Merge: f140f17 63725f1
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Merge pull request #4 from cynthiaxw/Mahsa's-branch
+
+commit 63725f1638d506c869f32255927699ade00094ca
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    listener
+
+commit b33dc3e8db2d9c0d16aee982b9dacae6453dbbca
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    listener
+
+commit bd5e9ea9dc646995ee28a6f435c13909f66a9f06
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    listener
+
+commit 6dc6ed87d50e9f1d2be8acd8d252ae16652d4a5a
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    listener
+
+commit e7e72a85a470f21a014511959195b94ff3120767
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Create PushButtonListenerDevice.java
+
+commit 89f9958094d33e4184d0c032ec7403de776e88c2
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Add files via upload
+
+commit efd21ffdf376f313ddd20b9d1e509d01725cbaea
+Author: ckbullock410 <ckbullock410@gmail.com>
+
+    Add files via upload
+
+commit f140f17623e3dd4fb75840b59bbd673acb9caac7
+Merge: c1e0125 e0ce31b
+Author: cynthiaxw <365683780@qq.com>
+
+    Merge pull request #2 from cynthiaxw/Trent's-Branch
+
+commit c1e012591ce2e49d41fa035a2ef58250ac005c9f
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    New Hardware Files
+
+commit e312ba950acf43980b18ae42bc9596d0fc197368
+Merge: a66a2b5 354ec6e
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Merge pull request #1 from cynthiaxw/First-Logic
+
+commit 354ec6e83777a314a838462165689aa4b05c00ae
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Add files via upload
+
+commit e0ce31b94a7452e93c8e1fbcadc8200548b0d4dc
+Author: ttdjohns <32712899+ttdjohns@users.noreply.github.com>
+
+    Add files via upload
+
+commit 4a1d82d760c09a3d7a844a218c1b1e0c5b37bfcd
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Update Implementation.java
+
+commit ca5b2bb1283da869e51b079d4ae8428265544887
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Create TestVending.java
+
+commit add622fadd46e5b4734975293ef2fad80f11dfce
+Author: mahsaLotfi <32718597+mahsaLotfi@users.noreply.github.com>
+
+    Create Implementation.java
+
+commit a66a2b53e33fa921f14c28fc4405c76a9e881b7f
+Author: cynthiaxw <365683780@qq.com>
+
+    Add files via upload
+
+commit b9282d21bc34e61bb2cd77287d84ce61f1347ae7
+Author: cynthiaxw <365683780@qq.com>
+
+    Add files via upload
+
+commit aab1d533a0af2e4ba84e969a5824d179872d074d
+Author: cynthiaxw <365683780@qq.com>
+
+    Initial commit
