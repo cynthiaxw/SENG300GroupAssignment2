@@ -1,6 +1,8 @@
-package groupAssignment2;
-import org.lsmr.vending.*;
-import org.lsmr.vending.hardware.*;
+package ca.ucalgary.seng300.a2;
+import org.lsmr.vending.hardware.AbstractHardware;
+import org.lsmr.vending.hardware.AbstractHardwareListener;
+import org.lsmr.vending.hardware.IndicatorLight;
+import org.lsmr.vending.hardware.IndicatorLightListener;
 
 public class IndicatorLightListenerDevice implements IndicatorLightListener{
 
@@ -8,7 +10,6 @@ public class IndicatorLightListenerDevice implements IndicatorLightListener{
 	public int enabledCount = 0;
 	public int disabledCount = 0;
 	public boolean lightActivated = false;
-	public boolean lightDeactivated = false;
 	
 	private VendingLogicInterface logic;
 	
@@ -62,7 +63,7 @@ public class IndicatorLightListenerDevice implements IndicatorLightListener{
 	*/
 	@Override
 	public void deactivated(IndicatorLight light) {
-		lightDeactivated = true;
+		lightActivated = false;
 		logic.getEventLog().writeToLog("IndicatorLight was turned off.");
 		
 	}
