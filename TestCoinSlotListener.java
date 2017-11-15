@@ -9,6 +9,8 @@ import ca.ucalgary.seng300.a2.CoinSlotListenerDevice;
 import ca.ucalgary.seng300.a2.EventLogInterface;
 import ca.ucalgary.seng300.a2.VendingLogicInterface;
 
+//******************************************************* This is too out of date, as the listeners are not explicity stated as needed
+//******************************************************* we should not submit this!!
 
 /**
  * 100% coverage, although
