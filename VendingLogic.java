@@ -118,7 +118,7 @@ public class VendingLogic implements VendingLogicInterface {
 		displayWelcome = false;
 		try {
 			futureTask.wait(5000);				// 5 sec
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
@@ -132,7 +132,7 @@ public class VendingLogic implements VendingLogicInterface {
 		displayWelcome = true;
 		try {
 			futureTask.wait(10000);				// 10 sec
-		} catch (InterruptedException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
